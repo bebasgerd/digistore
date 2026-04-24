@@ -185,20 +185,19 @@
             padding: 1.5rem;
             border-radius: 16px;
             border: 1px solid var(--border-color);
+            min-height: 420px;
+            display: flex;
+            flex-direction: column;
         }
 
         .chart-header {
             margin-bottom: 1.5rem;
         }
 
-        .chart-header h3 {
-            font-size: 1.1rem;
-            margin-bottom: 4px;
-        }
-
-        .chart-header p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
+        .chart-wrapper {
+            position: relative;
+            flex-grow: 1;
+            width: 100%;
         }
 
         /* TABLE SECTION */
@@ -225,7 +224,6 @@
             padding: 1rem 1.5rem;
             font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
             color: var(--text-secondary);
         }
 
@@ -257,59 +255,23 @@
         }
 
         @media (max-width: 768px) {
-            aside {
-                left: calc(-1 * var(--sidebar-width));
-            }
-            aside.open {
-                left: 0;
-            }
-            main {
-                margin-left: 0;
-                width: 100%;
-            }
-            .mobile-toggle {
-                display: block;
-            }
+            aside { left: calc(-1 * var(--sidebar-width)); }
+            aside.open { left: 0; }
+            main { margin-left: 0; width: 100%; }
+            .mobile-toggle { display: block; }
         }
     </style>
 </head>
 <body>
 
     <aside id="sidebar">
-        <div class="sidebar-header">
-            DIGISTORE.
-        </div>
+        <div class="sidebar-header">DIGISTORE.</div>
         <ul class="nav-menu">
-            <li class="nav-item">
-                <a href="#" class="nav-link active">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                    Dashboard
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
-                    Produk
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-                    Transaksi
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                    Laporan
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    Pengaturan
-                </a>
-            </li>
+            <li class="nav-item"><a href="#" class="nav-link active">Dashboard</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Produk</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Transaksi</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Laporan</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Pengaturan</a></li>
         </ul>
     </aside>
 
@@ -329,81 +291,42 @@
         </header>
 
         <section class="stats-grid">
-            <div class="stat-card">
-                <span class="stat-label">Total Penjualan</span>
-                <div class="stat-value">Rp 12.450.000</div>
-            </div>
-            <div class="stat-card">
-                <span class="stat-label">Total Transaksi</span>
-                <div class="stat-value">1,284</div>
-            </div>
-            <div class="stat-card">
-                <span class="stat-label">Produk Terjual</span>
-                <div class="stat-value">458 Unit</div>
-            </div>
+            <div class="stat-card"><span class="stat-label">Total Penjualan</span><div class="stat-value">Rp 12.450.000</div></div>
+            <div class="stat-card"><span class="stat-label">Total Transaksi</span><div class="stat-value">1,284</div></div>
+            <div class="stat-card"><span class="stat-label">Produk Terjual</span><div class="stat-value">458 Unit</div></div>
         </section>
 
         <section class="charts-container">
             <div class="chart-card">
                 <div class="chart-header">
                     <h3>Penjualan 1 Bulan Terakhir</h3>
-                    <p>Statistik performa pendapatan dalam 30 hari.</p>
+                    <p>Statistik performa pendapatan (Juta Rp).</p>
                 </div>
-                <canvas id="monthlyChart"></canvas>
+                <div class="chart-wrapper">
+                    <canvas id="monthlyChart"></canvas>
+                </div>
             </div>
             <div class="chart-card">
                 <div class="chart-header">
-                    <h3>Penjualan 1 Minggu</h3>
-                    <p>Daily breakdown minggu ini.</p>
+                    <h3>Kategori Produk</h3>
+                    <p>Persentase penjualan minggu ini.</p>
                 </div>
-                <canvas id="weeklyChart"></canvas>
+                <div class="chart-wrapper">
+                    <canvas id="weeklyChart"></canvas>
+                </div>
             </div>
         </section>
 
         <section class="table-container">
-            <div class="table-header">
-                <h3>Transaksi Terbaru</h3>
-            </div>
+            <div class="table-header"><h3>Transaksi Terbaru</h3></div>
             <div style="overflow-x: auto;">
                 <table>
                     <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Produk</th>
-                            <th>Email</th>
-                            <th>WhatsApp</th>
-                            <th>Status</th>
-                        </tr>
+                        <tr><th>Order ID</th><th>Produk</th><th>Email</th><th>WhatsApp</th><th>Status</th></tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>#DE-1713948201</td>
-                            <td>E-Course Kopi Bisnis</td>
-                            <td>budi.s@email.com</td>
-                            <td>08123456789</td>
-                            <td><span class="status-badge status-success">Berhasil</span></td>
-                        </tr>
-                        <tr>
-                            <td>#DE-1713948255</td>
-                            <td>Resep Keripik UMKM</td>
-                            <td>anisah@email.com</td>
-                            <td>08987654321</td>
-                            <td><span class="status-badge status-pending">Menunggu</span></td>
-                        </tr>
-                        <tr>
-                            <td>#DE-1713948299</td>
-                            <td>Bundle UMKM Premium</td>
-                            <td>dani.tech@email.com</td>
-                            <td>08112233445</td>
-                            <td><span class="status-badge status-success">Berhasil</span></td>
-                        </tr>
-                        <tr>
-                            <td>#DE-1713948312</td>
-                            <td>E-Course Kopi Bisnis</td>
-                            <td>lisa.m@email.com</td>
-                            <td>08556677889</td>
-                            <td><span class="status-badge status-success">Berhasil</span></td>
-                        </tr>
+                        <tr><td>#DE-1713948201</td><td>E-Course Kopi Bisnis</td><td>budi.s@email.com</td><td>08123456789</td><td><span class="status-badge status-success">Berhasil</span></td></tr>
+                        <tr><td>#DE-1713948255</td><td>Resep Keripik UMKM</td><td>anisah@email.com</td><td>08987654321</td><td><span class="status-badge status-pending">Menunggu</span></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -411,79 +334,58 @@
     </main>
 
     <script>
-        // TOGGLE SIDEBAR MOBILE
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('open');
         }
 
-        // CHART CONFIGURATION
-        const ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
-        const ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
-
-        // Styles for charts
-        const primaryColor = '#8b5cf6';
-        const secondaryColor = '#334155';
-
-        // Monthly Sales Chart (Line)
-        new Chart(ctxMonthly, {
-            type: 'line',
-            data: {
-                labels: ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4'],
-                datasets: [{
-                    label: 'Pendapatan (Juta Rp)',
-                    data: [2.5, 3.8, 3.2, 4.1],
-                    borderColor: primaryColor,
-                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                    borderWidth: 3,
-                    fill: true,
-                    tension: 0.4,
-                    pointRadius: 5,
-                    pointBackgroundColor: primaryColor
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
+        document.addEventListener('DOMContentLoaded', function() {
+            // Chart Bulanan
+            const ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
+            new Chart(ctxMonthly, {
+                type: 'line',
+                data: {
+                    labels: ['Mgu 1', 'Mgu 2', 'Mgu 3', 'Mgu 4'],
+                    datasets: [{
+                        label: 'Pendapatan',
+                        data: [2.5, 3.8, 3.2, 4.1],
+                        borderColor: '#8b5cf6',
+                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: { color: 'rgba(255,255,255,0.05)' },
-                        ticks: { color: '#94a3b8' }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: { color: '#94a3b8' }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+                        x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
                     }
                 }
-            }
-        });
+            });
 
-        // Weekly Sales Chart (Doughnut)
-        new Chart(ctxWeekly, {
-            type: 'doughnut',
-            data: {
-                labels: ['Kopi', 'Keripik', 'Bundle'],
-                datasets: [{
-                    data: [45, 35, 20],
-                    backgroundColor: [primaryColor, '#10b981', '#f59e0b'],
-                    borderWidth: 0,
-                    hoverOffset: 10
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: { color: '#94a3b8', padding: 20 }
-                    }
+            // Chart Mingguan
+            const ctxWeekly = document.getElementById('weeklyChart').getContext('2d');
+            new Chart(ctxWeekly, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Kopi', 'Keripik', 'Bundle'],
+                    datasets: [{
+                        data: [45, 35, 20],
+                        backgroundColor: ['#8b5cf6', '#10b981', '#f59e0b'],
+                        borderWidth: 0
+                    }]
                 },
-                cutout: '70%'
-            }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#94a3b8', padding: 20 } }
+                    },
+                    cutout: '75%'
+                }
+            });
         });
     </script>
 </body>
