@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CBT Pro - Pemrograman Web XI RPL</title>
-  <!-- Google Fonts & FontAwesome Icons -->
+  <title>CBT Practice - Ujian Live Coding 15 Materi HTML & CSS</title>
+  <!-- Google Fonts & FontAwesome -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -12,7 +12,7 @@
     :root {
       --bg-dark: #0f172a;
       --card-bg: rgba(30, 41, 59, 0.7);
-      --card-border: rgba(255, 255, 255, 0.08);
+      --card-border: rgba(255, 255, 255, 0.1);
       --primary: #6366f1;
       --primary-hover: #4f46e5;
       --accent: #06b6d4;
@@ -24,7 +24,7 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    
+
     body {
       background: #0f172a;
       background-image: 
@@ -34,571 +34,266 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
       user-select: none;
     }
 
-    .container {
-      width: 100%;
-      max-width: 850px;
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      padding: 40px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Warning Top Bar */
     #pelanggaran-bar {
       position: fixed;
       top: 0; left: 0; right: 0;
-      background: rgba(239, 68, 68, 0.9);
+      background: rgba(239, 68, 68, 0.95);
       backdrop-filter: blur(8px);
       color: white;
-      padding: 12px 20px;
+      padding: 10px 20px;
       font-weight: 700;
       font-size: 14px;
       text-align: center;
       display: none;
       z-index: 9999;
-      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-      letter-spacing: 0.5px;
     }
 
-    .badge-v {
-      background: #fff;
-      color: var(--danger);
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-weight: 800;
-    }
+    .badge-v { background: #fff; color: var(--danger); padding: 2px 8px; border-radius: 6px; font-weight: 800; }
 
-    /* Headers */
-    .header-title {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-
-    .header-title h1 {
-      font-size: 28px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 8px;
-    }
-
-    .header-title p {
-      color: var(--text-muted);
-      font-size: 14px;
-    }
-
-    /* Rules Banner */
-    .rules-card {
-      background: rgba(239, 68, 68, 0.08);
-      border: 1px solid rgba(239, 68, 68, 0.2);
-      border-radius: 16px;
-      padding: 16px 20px;
-      margin-bottom: 28px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .rules-card i {
-      font-size: 24px;
-      color: var(--danger);
-    }
-
-    .rules-text {
-      font-size: 13px;
-      color: #fca5a5;
-      line-height: 1.5;
-    }
-
-    /* Form & Inputs */
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-    }
-
-    .input-control {
+    .container {
       width: 100%;
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid var(--card-border);
-      padding: 14px 18px;
-      border-radius: 12px;
-      color: #fff;
-      font-size: 15px;
-      outline: none;
-      transition: all 0.3s ease;
-    }
-
-    .input-control:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
-    }
-
-    /* Buttons */
-    .btn {
-      width: 100%;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
-      color: white;
-      border: none;
-      padding: 16px;
-      border-radius: 14px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 15px 25px -5px rgba(99, 102, 241, 0.5);
-    }
-
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* Exam Topbar */
-    .exam-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(15, 23, 42, 0.5);
-      padding: 16px 20px;
-      border-radius: 16px;
-      margin-bottom: 30px;
-      border: 1px solid var(--card-border);
-    }
-
-    .user-badge {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 700;
-      font-size: 15px;
-    }
-
-    .user-avatar {
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(135deg, var(--accent), var(--primary));
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-    }
-
-    .kkm-badge {
-      background: rgba(245, 158, 11, 0.15);
-      color: var(--warning);
-      border: 1px solid rgba(245, 158, 11, 0.3);
-      padding: 6px 14px;
-      border-radius: 30px;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    /* Soal Card */
-    .soal-card {
-      background: rgba(15, 23, 42, 0.4);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 24px;
-      transition: border-color 0.3s ease;
-    }
-
-    .soal-card:hover {
-      border-color: rgba(99, 102, 241, 0.3);
-    }
-
-    .soal-title {
-      font-size: 16px;
-      font-weight: 700;
-      line-height: 1.6;
-      margin-bottom: 18px;
-      color: #f1f5f9;
-    }
-
-    /* Opsi Jawaban */
-    .opsi-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .opsi-item {
-      display: flex;
-      align-items: center;
-      padding: 14px 18px;
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .opsi-item:hover {
-      background: rgba(99, 102, 241, 0.1);
-      border-color: rgba(99, 102, 241, 0.4);
-    }
-
-    .opsi-item input[type="radio"] {
-      display: none;
-    }
-
-    .opsi-key {
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 13px;
-      margin-right: 14px;
-      color: var(--text-muted);
-      transition: all 0.2s ease;
-    }
-
-    .opsi-item input[type="radio"]:checked + .opsi-key {
-      background: var(--primary);
-      border-color: var(--primary);
-      color: white;
-      box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
-    }
-
-    .opsi-item input[type="radio"]:checked ~ .opsi-text {
-      color: #fff;
-      font-weight: 600;
-    }
-
-    .opsi-text {
-      font-size: 14px;
-      color: #cbd5e1;
+      max-width: 1250px;
+      margin: 20px auto;
+      padding: 20px;
       flex: 1;
     }
 
-    code {
-      font-family: 'Fira Code', monospace;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 3px 8px;
-      border-radius: 6px;
-      color: #38bdf8;
-      font-size: 13px;
+    /* Card Login & Hasil */
+    .card-box {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 600px;
+      margin: 40px auto;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
 
-    /* Result Box */
-    .result-container {
-      text-align: center;
-      padding: 20px 0;
+    .header-title { text-align: center; margin-bottom: 24px; }
+    .header-title h1 {
+      font-size: 26px; font-weight: 800;
+      background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
     }
 
-    .score-circle {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      background: rgba(15, 23, 42, 0.8);
-      border: 4px solid var(--primary);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin: 20px auto;
-      box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; }
+    .input-control {
+      width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--card-border);
+      padding: 14px 18px; border-radius: 12px; color: #fff; font-size: 15px; outline: none;
     }
 
-    .score-number {
-      font-size: 44px;
-      font-weight: 800;
-      color: #fff;
+    .btn {
+      width: 100%; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+      color: white; border: none; padding: 14px 20px; border-radius: 12px; font-size: 16px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+      box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
+    }
+    .btn:hover { transform: translateY(-2px); }
+
+    /* Layout Ujian Coding */
+    .exam-topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(15, 23, 42, 0.8); border: 1px solid var(--card-border);
+      padding: 16px 24px; border-radius: 16px; margin-bottom: 20px;
     }
 
-    .score-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--text-muted);
+    .timer-badge {
+      background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5; padding: 8px 16px; border-radius: 30px; font-weight: 800; font-size: 18px;
+      display: flex; align-items: center; gap: 8px;
     }
 
-    .status-badge-pass {
-      color: var(--success);
-      font-size: 22px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+    .soal-instruction {
+      background: rgba(30, 41, 59, 0.6); border: 1px solid var(--card-border);
+      border-radius: 16px; padding: 20px; margin-bottom: 20px; font-size: 13px; line-height: 1.6;
+    }
+    .soal-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; margin-top: 10px; color: var(--text-muted);
+    }
+    .soal-grid div { display: flex; align-items: center; gap: 6px; }
+
+    .editor-container {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; min-height: 500px;
     }
 
-    .status-badge-fail {
-      color: var(--danger);
-      font-size: 22px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+    .pane {
+      display: flex; flex-direction: column; background: rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--card-border); border-radius: 16px; overflow: hidden;
+    }
+
+    .pane-header {
+      background: rgba(30, 41, 59, 0.8); padding: 12px 18px; font-weight: 700; font-size: 13px;
+      color: var(--text-muted); display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    textarea#code-input {
+      flex: 1; width: 100%; height: 100%; background: #090d16; color: #38bdf8;
+      border: none; padding: 18px; font-family: 'Fira Code', monospace; font-size: 13.5px;
+      line-height: 1.6; resize: none; outline: none; tab-size: 2;
+    }
+
+    iframe#preview-frame {
+      flex: 1; width: 100%; height: 100%; background: #ffffff; border: none;
     }
 
     .hidden { display: none !important; }
+
+    /* Result Circle */
+    .score-circle {
+      width: 140px; height: 140px; border-radius: 50%; background: rgba(15, 23, 42, 0.8);
+      border: 4px solid var(--primary); display: flex; flex-direction: column;
+      align-items: center; justify-content: center; margin: 20px auto;
+    }
   </style>
 </head>
 <body>
 
 <div id="pelanggaran-bar">
-  <i class="fa-solid fa-triangle-exclamation"></i> PERINGATAN! Keluar dari Layar Ujian. Total Pelanggaran: <span class="badge-v" id="violation-count">0</span>x
+  <i class="fa-solid fa-triangle-exclamation"></i> PERINGATAN! Keluar dari Layar Ujian. Pelanggaran: <span class="badge-v" id="violation-count">0</span>x
 </div>
 
 <div class="container">
   <!-- Halaman Login -->
-  <div id="page-login">
+  <div id="page-login" class="card-box">
     <div class="header-title">
-      <h1>CBT Pemrograman Web</h1>
-      <p>Penilaian Sumatif Tengah Semester (PSTS) - Kelas XI RPL</p>
-    </div>
-
-    <div class="rules-card">
-      <i class="fa-solid fa-shield-halved"></i>
-      <div class="rules-text">
-        <strong>Aturan Ujian Strict KKM 80:</strong><br>
-        • Wajib mencapai skor minimal <strong>80</strong> (Benar minimal 8 Soal).<br>
-        • Jika di bawah 80, Anda wajib mengulang ujian dari awal.<br>
-        • Sistem mendeteksi otomatis jika Anda keluar layar / membuka tab lain.
-      </div>
+      <h1>Ujian Praktek Ngoding HTML</h1>
+      <p>15 Tugas Kodingan Komprehensif (Waktu: 10 Menit)</p>
     </div>
 
     <div class="form-group">
       <label>Nama Lengkap Siswa</label>
-      <input type="text" id="nama" class="input-control" placeholder="Masukkan nama sesuai presensi" required autocomplete="off">
+      <input type="text" id="nama" class="input-control" placeholder="Masukkan nama lengkap Anda" required autocomplete="off">
     </div>
 
     <div class="form-group">
-      <label>Kelas / Rombongan Belajar</label>
+      <label>Kelas / Rombel</label>
       <input type="text" id="kelas" class="input-control" placeholder="Contoh: XI RPL 1" required autocomplete="off">
     </div>
 
     <button class="btn" onclick="mulaiUjian()">
-      <span>Mulai Ujian Sekarang</span>
-      <i class="fa-solid fa-arrow-right"></i>
+      <span>Mulai Praktek Ngoding</span>
+      <i class="fa-solid fa-code"></i>
     </button>
   </div>
 
-  <!-- Halaman Ujian -->
+  <!-- Halaman Ujian Coding -->
   <div id="page-ujian" class="hidden">
-    <div class="exam-header">
-      <div class="user-badge">
-        <div class="user-avatar" id="avatar-initial">U</div>
-        <div>
-          <div id="display-nama" style="color: #fff;">Nama Siswa</div>
-          <div id="display-kelas" style="font-size: 12px; color: var(--text-muted);">Kelas</div>
-        </div>
+    <div class="exam-topbar">
+      <div>
+        <strong id="display-nama" style="font-size: 16px;">Nama Siswa</strong>
+        <div id="display-kelas" style="font-size: 12px; color: var(--text-muted);">Kelas</div>
       </div>
-      <div class="kkm-badge">
-        <i class="fa-solid fa-bullseye"></i> KKM: 80
+
+      <div class="timer-badge">
+        <i class="fa-solid fa-clock"></i>
+        <span id="timer-display">10:00</span>
       </div>
     </div>
 
-    <form id="form-soal">
-      <div id="soal-container"></div>
-      <button type="button" class="btn" id="btn-submit" onclick="konfirmasiSelesai()">
-        <i class="fa-solid fa-paper-plane"></i>
-        <span>Kirim Seluruh Jawaban</span>
-      </button>
-    </form>
+    <!-- Instruksi Soal 15 Poin -->
+    <div class="soal-instruction">
+      <strong><i class="fa-solid fa-list-check"></i> Lengkapi 15 Fitur Kode HTML & CSS Berikut:</strong>
+      <div class="soal-grid">
+        <div>1. Heading (<code>&lt;h1&gt;</code>-<code>&lt;h6&gt;</code>)</div>
+        <div>9. Item Daftar (<code>&lt;li&gt;</code>)</div>
+        <div>2. Paragraf (<code>&lt;p&gt;</code>)</div>
+        <div>10. Tabel (<code>&lt;table&gt;</code>)</div>
+        <div>3. Teks Tebal (<code>&lt;b&gt;</code>/<code>&lt;strong&gt;</code>)</div>
+        <div>11. Baris & Sel Tabel (<code>&lt;tr&gt;</code> & <code>&lt;td&gt;</code>)</div>
+        <div>4. Teks Miring (<code>&lt;i&gt;</code>/<code>&lt;em&gt;</code>)</div>
+        <div>12. Pembatas / Spasi (<code>&lt;hr&gt;</code> / <code>&lt;br&gt;</code>)</div>
+        <div>5. Teks Garis Bawah (<code>&lt;u&gt;</code>/<code>&lt;ins&gt;</code>)</div>
+        <div>13. Style Warna (<code>style="color:..."</code>)</div>
+        <div>6. Gambar (<code>&lt;img src="..." alt="..."&gt;</code>)</div>
+        <div>14. Input Teks (<code>&lt;input type="..."&gt;</code>)</div>
+        <div>7. Tautan / Link (<code>&lt;a href="..."&gt;</code>)</div>
+        <div>15. Tombol (<code>&lt;button&gt;</code>)</div>
+        <div>8. List (<code>&lt;ol&gt;</code> / <code>&lt;ul&gt;</code>)</div>
+      </div>
+    </div>
+
+    <!-- Editor & Preview -->
+    <div class="editor-container">
+      <div class="pane">
+        <div class="pane-header">
+          <span><i class="fa-solid fa-code"></i> HTML EDITOR</span>
+          <span style="font-size: 11px; opacity: 0.7;">Ketik kode HTML di sini</span>
+        </div>
+        <textarea id="code-input" placeholder="Tuliskan seluruh kode HTML & CSS Anda..." oninput="updatePreview()"></textarea>
+      </div>
+
+      <div class="pane">
+        <div class="pane-header">
+          <span><i class="fa-solid fa-eye"></i> LIVE PREVIEW</span>
+          <span style="font-size: 11px; opacity: 0.7;">Hasil Tampilan Real-time</span>
+        </div>
+        <iframe id="preview-frame"></iframe>
+      </div>
+    </div>
+
+    <button class="btn" id="btn-submit" onclick="konfirmasiSelesai()" style="margin-top: 20px;">
+      <i class="fa-solid fa-paper-plane"></i>
+      <span>Selesai & Kirim Kode Ujian</span>
+    </button>
   </div>
 
   <!-- Halaman Hasil -->
-  <div id="page-hasil" class="hidden">
-    <div class="result-container">
-      <h2 style="font-size: 24px; font-weight: 800;">Laporan Hasil Ujian</h2>
-      <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px;">Sistem Evaluasi Ketuntasan Minimal</p>
+  <div id="page-hasil" class="hidden card-box" style="text-align: center;">
+    <h2>Laporan Hasil Ujian Praktek</h2>
+    <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px;">Sistem Evaluasi Auto-Grading (15 Kriteria)</p>
 
-      <div class="score-circle">
-        <span class="score-number" id="display-skor">0</span>
-        <span class="score-label">Skor Akhir</span>
-      </div>
+    <div class="score-circle">
+      <span id="display-skor" style="font-size: 44px; font-weight: 800; color: #fff;">0</span>
+      <span style="font-size: 11px; text-transform: uppercase; color: var(--text-muted);">Skor Akhir</span>
+    </div>
 
-      <div id="status-box"></div>
-      <p id="pesan-detail" style="margin-top: 16px; color: var(--text-muted); font-size: 14px; line-height: 1.6; max-width: 500px; margin-left: auto; margin-right: auto;"></p>
+    <div id="status-box"></div>
+    <p id="pesan-detail" style="margin-top: 16px; color: var(--text-muted); font-size: 14px; line-height: 1.6;"></p>
 
-      <div id="action-remedial" class="hidden" style="margin-top: 30px;">
-        <button class="btn" style="background: linear-gradient(135deg, var(--warning), #d97706);" onclick="ulangUjian()">
-          <i class="fa-solid fa-rotate-right"></i>
-          <span>Mengulang Ujian Kembali</span>
-        </button>
-      </div>
+    <div id="action-remedial" class="hidden" style="margin-top: 25px;">
+      <button class="btn" style="background: linear-gradient(135deg, var(--warning), #d97706);" onclick="ulangUjian()">
+        <i class="fa-solid fa-rotate-right"></i>
+        <span>Mengulang Ujian Kembali</span>
+      </button>
     </div>
   </div>
 </div>
 
 <script>
   // PASTE URL GOOGLE APPS SCRIPT ANDA DI SINI
-  const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzbH8lwbe6Uvbyxn7Y6lJMYKOiKd53anR6xLBdSVCDw_ivsz3OVhjH5xzu953lFKFa_/exec";
-
-  // BANK SOAL 10 NOMOR (PSTS Pemrograman Web XI RPL)
-  const bankSoal = [
-    {
-      id: 1,
-      soal: "1. Kode HTML manakah yang tepat untuk membuat judul dokumen utama bernaskah 'Data Siswa RPL' dan sebuah paragraf di bawahnya bernaskah 'Selamat Datang'?",
-      opsi: {
-        a: "&lt;h1&gt;Data Siswa RPL&lt;/h1&gt;&lt;p&gt;Selamat Datang&lt;/p&gt;",
-        b: "&lt;head&gt;Data Siswa RPL&lt;/head&gt;&lt;body&gt;Selamat Datang&lt;/body&gt;",
-        c: "&lt;title&gt;Data Siswa RPL&lt;/title&gt;&lt;text&gt;Selamat Datang&lt;/text&gt;",
-        d: "&lt;h2&gt;Data Siswa RPL&lt;/h2&gt;&lt;h1&gt;Selamat Datang&lt;/h1&gt;",
-        e: "&lt;header&gt;Data Siswa RPL&lt;/header&gt;&lt;div&gt;Selamat Datang&lt;/div&gt;"
-      },
-      kunci: "a"
-    },
-    {
-      id: 2,
-      soal: "2. Sintaks HTML yang benar untuk menampilkan gambar bernama 'logo.png' dengan teks alternatif (alt) 'Logo Sekolah' adalah...",
-      opsi: {
-        a: "&lt;img path=\"logo.png\" title=\"Logo Sekolah\"&gt;",
-        b: "&lt;img src=\"logo.png\" alt=\"Logo Sekolah\"&gt;",
-        c: "&lt;image link=\"logo.png\" alt=\"Logo Sekolah\"&gt;",
-        d: "&lt;img href=\"logo.png\" text=\"Logo Sekolah\"&gt;",
-        e: "&lt;media source=\"logo.png\" description=\"Logo Sekolah\"&gt;"
-      },
-      kunci: "b"
-    },
-    {
-      id: 3,
-      soal: "3. Penulisan kode HTML yang tepat untuk membuat hyperlink menuju 'https://www.google.com' dengan teks 'Buka Google' yang terbuka di tab baru adalah...",
-      opsi: {
-        a: "&lt;a href=\"https://www.google.com\" target=\"_self\"&gt;Buka Google&lt;/a&gt;",
-        b: "&lt;a link=\"https://www.google.com\" open=\"new\"&gt;Buka Google&lt;/a&gt;",
-        c: "&lt;a href=\"https://www.google.com\" target=\"_blank\"&gt;Buka Google&lt;/a&gt;",
-        d: "&lt;a url=\"https://www.google.com\" window=\"_blank\"&gt;Buka Google&lt;/a&gt;",
-        e: "&lt;a redirect=\"https://www.google.com\" tab=\"_new\"&gt;Buka Google&lt;/a&gt;"
-      },
-      kunci: "c"
-    },
-    {
-      id: 4,
-      soal: "4. Tag HTML yang digunakan untuk membuat daftar berurutan (ordered list) berupa angka dengan item 'Kelas XI RPL 1' dan 'Kelas XI RPL 2' adalah...",
-      opsi: {
-        a: "&lt;ol&gt;&lt;li&gt;Kelas XI RPL 1&lt;/li&gt;&lt;li&gt;Kelas XI RPL 2&lt;/li&gt;&lt;/ol&gt;",
-        b: "&lt;ul&gt;&lt;li&gt;Kelas XI RPL 1&lt;/li&gt;&lt;li&gt;Kelas XI RPL 2&lt;/li&gt;&lt;/ul&gt;",
-        c: "&lt;list&gt;&lt;item&gt;Kelas XI RPL 1&lt;/item&gt;&lt;item&gt;Kelas XI RPL 2&lt;/item&gt;&lt;/list&gt;",
-        d: "&lt;dl&gt;&lt;dt&gt;Kelas XI RPL 1&lt;/dt&gt;&lt;dt&gt;Kelas XI RPL 2&lt;/dt&gt;&lt;/dl&gt;",
-        e: "&lt;ol&gt;&lt;list&gt;Kelas XI RPL 1&lt;/list&gt;&lt;list&gt;Kelas XI RPL 2&lt;/list&gt;&lt;/ol&gt;"
-      },
-      kunci: "a"
-    },
-    {
-      id: 5,
-      soal: "5. Struktur tag HTML yang benar untuk membentuk tabel sederhana 1 baris dan 2 kolom dengan isi 'NIS' dan 'Nama' adalah...",
-      opsi: {
-        a: "&lt;table&gt;&lt;row&gt;&lt;col&gt;NIS&lt;/col&gt;&lt;col&gt;Nama&lt;/col&gt;&lt;/row&gt;&lt;/table&gt;",
-        b: "&lt;table&gt;&lt;tr&gt;&lt;td&gt;NIS&lt;/td&gt;&lt;td&gt;Nama&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;",
-        c: "&lt;table&gt;&lt;th&gt;&lt;td&gt;NIS&lt;/td&gt;&lt;td&gt;Nama&lt;/td&gt;&lt;/th&gt;&lt;/table&gt;",
-        d: "&lt;table&gt;&lt;tr&gt;&lt;tc&gt;NIS&lt;/tc&gt;&lt;tc&gt;Nama&lt;/tc&gt;&lt;/tr&gt;&lt;/table&gt;",
-        e: "&lt;table&gt;&lt;td style=\"row\"&gt;NIS&lt;/td&gt;&lt;td style=\"row\"&gt;Nama&lt;/td&gt;&lt;/table&gt;"
-      },
-      kunci: "b"
-    },
-    {
-      id: 6,
-      soal: "6. Penerapan teknik Inline CSS yang tepat untuk mengubah warna teks pada tag paragraf menjadi merah (red) adalah...",
-      opsi: {
-        a: "&lt;p css=\"color: red;\"&gt;Teks Paragraf&lt;/p&gt;",
-        b: "&lt;p style=\"text-color: red;\"&gt;Teks Paragraf&lt;/p&gt;",
-        c: "&lt;p style=\"color: red;\"&gt;Teks Paragraf&lt;/p&gt;",
-        d: "&lt;p class=\"color-red\"&gt;Teks Paragraf&lt;/p&gt;",
-        e: "&lt;p color=\"red\"&gt;Teks Paragraf&lt;/p&gt;"
-      },
-      kunci: "c"
-    },
-    {
-      id: 7,
-      soal: "7. Penulisan Embedded CSS di dalam tag &lt;head&gt; yang berfungsi mengubah warna latar belakang seluruh halaman menjadi kuning (yellow) adalah...",
-      opsi: {
-        a: "&lt;style&gt;body { background-color: yellow; }&lt;/style&gt;",
-        b: "&lt;css&gt;body { background: yellow; }&lt;/css&gt;",
-        c: "&lt;script&gt;document.body.color = 'yellow';&lt;/script&gt;",
-        d: "&lt;style&gt;page { color-background: yellow; }&lt;/style&gt;",
-        e: "&lt;link rel=\"stylesheet\" color=\"yellow\"&gt;"
-      },
-      kunci: "a"
-    },
-    {
-      id: 8,
-      soal: "8. Sintaks HTML yang benar pada tag &lt;link&gt; untuk menghubungkan berkas HTML dengan file CSS eksternal bernama 'style.css' adalah...",
-      opsi: {
-        a: "&lt;link script=\"style.css\" type=\"text/css\"&gt;",
-        b: "&lt;link rel=\"stylesheet\" href=\"style.css\"&gt;",
-        c: "&lt;link src=\"style.css\" type=\"stylesheet\"&gt;",
-        d: "&lt;link href=\"style.css\" rel=\"css\"&gt;",
-        e: "&lt;link import=\"style.css\" type=\"text/css\"&gt;"
-      },
-      kunci: "b"
-    },
-    {
-      id: 9,
-      soal: "9. Pernyataan yang paling tepat mengenai letak penulisan Inline CSS, Embedded CSS, dan External CSS adalah...",
-      opsi: {
-        a: "Inline di tag &lt;head&gt;, Embedded di atribut style, External di berkas terpisah",
-        b: "Inline di atribut style, Embedded di tag &lt;style&gt;, External di berkas .css terpisah",
-        c: "Inline di berkas .css terpisah, Embedded di tag &lt;head&gt;, External di atribut style",
-        d: "Inline di tag &lt;style&gt;, Embedded di tag &lt;body&gt;, External di berkas .js terpisah",
-        e: "Inline di atribut class, Embedded di tag &lt;script&gt;, External di tag &lt;link&gt;"
-      },
-      kunci: "b"
-    },
-    {
-      id: 10,
-      soal: "10. Jika terdapat aturan CSS eksternal berupa .judul { color: blue; }, cara memanggil class tersebut pada elemen &lt;h2&gt; di HTML adalah...",
-      opsi: {
-        a: "&lt;h2 id=\"judul\"&gt;Judul Halaman&lt;/h2&gt;",
-        b: "&lt;h2 style=\"judul\"&gt;Judul Halaman&lt;/h2&gt;",
-        c: "&lt;h2 class=\"judul\"&gt;Judul Halaman&lt;/h2&gt;",
-        d: "&lt;h2 name=\"judul\"&gt;Judul Halaman&lt;/h2&gt;",
-        e: "&lt;h2 call=\".judul\"&gt;Judul Halaman&lt;/h2&gt;"
-      },
-      kunci: "c"
-    }
-  ];
+  const GAS_WEB_APP_URL = "GANTI_DENGAN_URL_GOOGLE_APPS_SCRIPT_ANDA";
 
   let dataPeserta = { nama: "", kelas: "" };
   let jumlahPelanggaran = 0;
   let isUjianAktif = false;
+  let timerInterval = null;
+  let totalDetik = 600; // 10 Menit = 600 Detik
+
+  const defaultCode = `<!DOCTYPE html>
+<html>
+<head>
+  <title>Ujian Praktek HTML</title>
+</head>
+<body>
+
+  <!-- Tuliskan 15 elemen kode HTML & CSS Anda di sini -->
+
+</body>
+</html>`;
 
   function mulaiUjian() {
     const nama = document.getElementById('nama').value.trim();
     const kelas = document.getElementById('kelas').value.trim();
 
     if (!nama || !kelas) {
-      alert("Harap lengkapi Nama dan Kelas Anda terlebih dahulu!");
+      alert("Harap lengkapi Nama dan Kelas terlebih dahulu!");
       return;
     }
 
@@ -607,75 +302,86 @@
 
     document.getElementById('display-nama').innerText = nama;
     document.getElementById('display-kelas').innerText = kelas;
-    document.getElementById('avatar-initial').innerText = nama.charAt(0).toUpperCase();
 
     document.getElementById('page-login').classList.add('hidden');
     document.getElementById('page-ujian').classList.remove('hidden');
 
-    renderSoal();
+    document.getElementById('code-input').value = defaultCode;
+    updatePreview();
+
     openFullscreen();
     isUjianAktif = true;
     aktifkanPengawas();
+    startTimer();
   }
 
-  function renderSoal() {
-    const container = document.getElementById('soal-container');
-    container.innerHTML = "";
+  function startTimer() {
+    timerInterval = setInterval(() => {
+      totalDetik--;
+      let menit = Math.floor(totalDetik / 60);
+      let detik = totalDetik % 60;
 
-    bankSoal.forEach((q) => {
-      let html = `<div class="soal-card">
-        <div class="soal-title">${q.soal}</div>
-        <div class="opsi-list">`;
-      
-      for (let key in q.opsi) {
-        html += `
-          <label class="opsi-item">
-            <input type="radio" name="soal_${q.id}" value="${key}" required>
-            <span class="opsi-key">${key.toUpperCase()}</span>
-            <span class="opsi-text"><code>${q.opsi[key]}</code></span>
-          </label>
-        `;
+      menit = menit < 10 ? '0' + menit : menit;
+      detik = detik < 10 ? '0' + detik : detik;
+
+      document.getElementById('timer-display').innerText = `${menit}:${detik}`;
+
+      if (totalDetik <= 0) {
+        clearInterval(timerInterval);
+        alert("Waktu 10 menit telah habis! Kode Anda akan otomatis dikirim.");
+        hitungHasil();
       }
-      html += `</div></div>`;
-      container.innerHTML += html;
-    });
+    }, 1000);
+  }
+
+  function updatePreview() {
+    const code = document.getElementById('code-input').value;
+    const previewFrame = document.getElementById('preview-frame');
+    const frameDoc = previewFrame.contentDocument || previewFrame.contentWindow.document;
+    
+    frameDoc.open();
+    frameDoc.write(code);
+    frameDoc.close();
   }
 
   function konfirmasiSelesai() {
-    let semuaTerisi = true;
-    bankSoal.forEach(q => {
-      const checked = document.querySelector(`input[name="soal_${q.id}"]:checked`);
-      if (!checked) semuaTerisi = false;
-    });
-
-    if (!semuaTerisi) {
-      alert("Harap dijawab semua 10 soal sebelum dikirimkan!");
-      return;
-    }
-
-    if (confirm("Apakah Anda yakin ingin menyelesaikan dan mengirimkan jawaban?")) {
+    if (confirm("Apakah Anda yakin ingin menyelesaikan dan mengirimkan kodingan ini?")) {
+      clearInterval(timerInterval);
       hitungHasil();
     }
   }
 
   function hitungHasil() {
     isUjianAktif = false;
-    let benar = 0;
+    clearInterval(timerInterval);
 
-    bankSoal.forEach(q => {
-      const selected = document.querySelector(`input[name="soal_${q.id}"]:checked`);
-      if (selected && selected.value === q.kunci) {
-        benar++;
-      }
-    });
+    const userCode = document.getElementById('code-input').value.toLowerCase();
+    let skorTotal = 0;
 
-    const skorTotal = (benar / bankSoal.length) * 100;
+    // EVALUASI AUTO-GRADING 15 KRITERIA
+    if (/<h[1-6][^>]*>.*?<\/h[1-6]>/.test(userCode)) skorTotal += 7; // 1. Heading
+    if (/<p[^>]*>.*?<\/p>/.test(userCode)) skorTotal += 7; // 2. Paragraf
+    if (/<(b|strong)[^>]*>.*?<\/(b|strong)>/.test(userCode)) skorTotal += 7; // 3. Tebal
+    if (/<(i|em)[^>]*>.*?<\/(i|em)>/.test(userCode)) skorTotal += 7; // 4. Miring
+    if (/<(u|ins)[^>]*>.*?<\/(u|ins)>/.test(userCode)) skorTotal += 6; // 5. Garis Bawah
+    if (/<img\s+[^>]*src=["'].*?["'][^>]*>/i.test(userCode)) skorTotal += 7; // 6. Gambar
+    if (/<a\s+[^>]*href=["'].*?["'][^>]*>.*?<\/a>/i.test(userCode)) skorTotal += 7; // 7. Link/Hyperlink
+    if (/<(ol|ul)[^>]*>.*?<\/(ol|ul)>/s.test(userCode)) skorTotal += 7; // 8. List Container
+    if (/<li[^>]*>.*?<\/li>/.test(userCode)) skorTotal += 6; // 9. List Item
+    if (/<table[^>]*>.*?<\/table>/s.test(userCode)) skorTotal += 7; // 10. Table
+    if (/<tr[^>]*>.*?<\/tr>/s.test(userCode) && /<(td|th)[^>]*>.*?<\/(td|th)>/.test(userCode)) skorTotal += 6; // 11. Table Row & Cell
+    if (/<(hr|br)\s*\/?>/.test(userCode)) skorTotal += 6; // 12. hr/br
+    if (/style\s*=\s*["'][^"']*color\s*:[^"']*["']/i.test(userCode)) skorTotal += 7; // 13. Inline Style Color
+    if (/<input\s+[^>]*type=["'].*?["'][^>]*>/i.test(userCode) || /<form[^>]*>/i.test(userCode)) skorTotal += 7; // 14. Input/Form
+    if (/<button[^>]*>.*?<\/button>/i.test(userCode)) skorTotal += 6; // 15. Button
+
+    if (skorTotal > 100) skorTotal = 100;
 
     const btnSubmit = document.getElementById('btn-submit');
-    btnSubmit.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Mengirim Nilai...</span>`;
+    btnSubmit.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Mengirimkan Nilai...</span>`;
     btnSubmit.disabled = true;
 
-    // Fetch ke Google Apps Script Background
+    // Kirim data ke Apps Script
     fetch(GAS_WEB_APP_URL, {
       method: 'POST',
       mode: 'no-cors',
@@ -709,32 +415,35 @@
     const actionRemedial = document.getElementById('action-remedial');
 
     if (skor >= 80) {
-      statusBox.innerHTML = `<div class="status-badge-pass"><i class="fa-solid fa-circle-check"></i> TUNTAS (LULUS)</div>`;
-      pesanDetail.innerText = "Selamat! Nilai Anda telah memenuhi batas ketuntasan minimal (KKM >= 80). Jawaban Anda telah sukses tersimpan di sistem.";
+      statusBox.innerHTML = `<h3 style="color: var(--success);"><i class="fa-solid fa-circle-check"></i> PRAKTEK TUNTAS (LULUS)</h3>`;
+      pesanDetail.innerText = "Luar biasa! Kodingan Anda berhasil memenuhi kriteria utama HTML & CSS dengan nilai di atas KKM (>= 80).";
       actionRemedial.classList.add('hidden');
     } else {
-      statusBox.innerHTML = `<div class="status-badge-fail"><i class="fa-solid fa-circle-xmark"></i> BELUM TUNTAS (REMEDIAL)</div>`;
-      pesanDetail.innerText = "Nilai Anda belum mencapai KKM (80). Sesuai aturan, Anda wajib mengulang ujian kembali hingga tuntas.";
+      statusBox.innerHTML = `<h3 style="color: var(--danger);"><i class="fa-solid fa-circle-xmark"></i> BELUM TUNTAS (REMEDIAL)</h3>`;
+      pesanDetail.innerText = "Nilai Anda di bawah 80. Pastikan Anda telah melengkapi seluruh 15 elemen wajib (seperti Heading, Paragraf, Gambar, Tabel, Form, Button, dll) lalu silakan coba lagi.";
       actionRemedial.classList.remove('hidden');
     }
   }
 
   function ulangUjian() {
     jumlahPelanggaran = 0;
+    totalDetik = 600;
     document.getElementById('violation-count').innerText = 0;
     document.getElementById('page-hasil').classList.add('hidden');
     document.getElementById('page-ujian').classList.remove('hidden');
-    document.getElementById('form-soal').reset();
-    
+    document.getElementById('code-input').value = defaultCode;
+    updatePreview();
+
     const btnSubmit = document.getElementById('btn-submit');
-    btnSubmit.innerHTML = `<i class="fa-solid fa-paper-plane"></i> <span>Kirim Seluruh Jawaban</span>`;
+    btnSubmit.innerHTML = `<i class="fa-solid fa-paper-plane"></i> <span>Selesai & Kirim Kode Ujian</span>`;
     btnSubmit.disabled = false;
 
     openFullscreen();
     isUjianAktif = true;
+    startTimer();
   }
 
-  // ANTI-CHEAT ENGINE
+  // PENGUATAN ANTI CHEAT & FULLSCREEN
   function openFullscreen() {
     const elem = document.documentElement;
     if (elem.requestFullscreen) elem.requestFullscreen();
@@ -753,7 +462,7 @@
     document.addEventListener('webkitfullscreenchange', handleViolation);
 
     window.addEventListener('blur', function() {
-      if (isUjianAktif) catatPelanggaran("Beralih Tab / Aplikasi lain");
+      if (isUjianAktif) catatPelanggaran("Berpindah aplikasi / Tab browser");
     });
   }
 
@@ -766,7 +475,7 @@
   function catatPelanggaran(alasan) {
     jumlahPelanggaran++;
     document.getElementById('violation-count').innerText = jumlahPelanggaran;
-    alert(`PERINGATAN PELANGGARAN TERDETEKSI (${jumlahPelanggaran}x)!\nAlasan: ${alasan}.\nHarap kembali fokus ke lembar ujian!`);
+    alert(`PERINGATAN PELANGGARAN (${jumlahPelanggaran}x)!\nAlasan: ${alasan}.\nKembali fokus ke editor ujian!`);
     if (isUjianAktif) openFullscreen();
   }
 </script>
