@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CBT Online - Tes Ketuntasan</title>
+  <title>CBT Online - Pemrograman Web XI RPL</title>
   <style>
     * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: #f4f6f9; margin: 0; padding: 20px; user-select: none; }
@@ -14,6 +14,7 @@
     input[type="text"] { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; }
     .btn { background: #27ae60; color: white; border: none; padding: 12px 24px; font-size: 16px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; }
     .btn:hover { background: #219150; }
+    .btn:disabled { background: #95a5a6; cursor: not-allowed; }
     .soal-box { margin-bottom: 25px; padding: 15px; border-bottom: 1px solid #eee; }
     .soal-text { font-size: 16px; font-weight: 600; color: #2c3e50; margin-bottom: 12px; line-height: 1.5; }
     .opsi-label { display: flex; align-items: center; padding: 10px 14px; margin: 6px 0; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer; transition: 0.2s; }
@@ -24,6 +25,7 @@
     .status-lulus { color: #27ae60; font-size: 24px; font-weight: bold; }
     .status-gagal { color: #c0392b; font-size: 24px; font-weight: bold; }
     .hidden { display: none; }
+    code { background: #f1f1f1; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
   </style>
 </head>
 <body>
@@ -33,10 +35,11 @@
 <div class="container">
   <!-- Halaman Login -->
   <div id="page-login">
-    <h2>Ujian Kompetensi Online</h2>
-    <p style="text-align: center; color: #e74c3c; font-size: 14px;">
-      * Catatan: Nilai ketuntasan minimal adalah <strong>80</strong>. Jika di bawah 80, Anda wajib mengulang dari awal.<br>
-      Dilarang keluar dari layar penuh / berpindah tab!
+    <h2>CBT Pemrograman Web XI RPL</h2>
+    <p style="text-align: center; color: #e74c3c; font-size: 14px; line-height: 1.4;">
+      * Nilai Ketuntasan Minimal (KKM) adalah <strong>80</strong> (Minimal Benar 8 Soal).<br>
+      Jika nilai di bawah 80, Anda wajib mengulang ujian dari awal.<br>
+      Dilarang keluar dari layar penuh / berpindah tab selama ujian!
     </p>
     <div class="form-group">
       <label>Nama Lengkap</label>
@@ -44,7 +47,7 @@
     </div>
     <div class="form-group">
       <label>Kelas / Rombel</label>
-      <input type="text" id="kelas" placeholder="Masukkan Kelas" required autocomplete="off">
+      <input type="text" id="kelas" placeholder="Contoh: XI RPL 1" required autocomplete="off">
     </div>
     <button class="btn" onclick="mulaiUjian()">Mulai Ujian Now</button>
   </div>
@@ -79,35 +82,130 @@
 
 <script>
   // PASTE URL GOOGLE APPS SCRIPT ANDA DI SINI
-  const GAS_WEB_APP_URL = "URL_GOOGLE_APPS_SCRIPT_ANDA_DI_SINI";
+  const GAS_WEB_APP_URL = "GANTI_DENGAN_URL_GOOGLE_APPS_SCRIPT_ANDA";
 
-  // BANK SOAL (10 Soal - Template Sementara)
+  // BANK SOAL 10 NOMOR (PSTS Pemrograman Web XI RPL)
   const bankSoal = [
     {
       id: 1,
-      soal: "1. Apa fungsi utama dari protokol HTTP pada komunikasi jaringan web?",
+      soal: "1. Kode HTML manakah yang tepat untuk membuat judul dokumen utama bernaskah 'Data Siswa RPL' dan sebuah paragraf di bawahnya bernaskah 'Selamat Datang'?",
       opsi: {
-        a: "Mengirimkan dokumen hypertext antar server dan klien web",
-        b: "Mengamankan lalu lintas data melalui enkripsi siber",
-        c: "Mengonversi nama domain menjadi alamat IP numerik",
-        d: "Mengelola pengalamatan fisik pada adapter jaringan lokal",
-        e: "Menghubungkan dua arsitektur basis data yang berbeda"
+        a: "&lt;h1&gt;Data Siswa RPL&lt;/h1&gt;&lt;p&gt;Selamat Datang&lt;/p&gt;",
+        b: "&lt;head&gt;Data Siswa RPL&lt;/head&gt;&lt;body&gt;Selamat Datang&lt;/body&gt;",
+        c: "&lt;title&gt;Data Siswa RPL&lt;/title&gt;&lt;text&gt;Selamat Datang&lt;/text&gt;",
+        d: "&lt;h2&gt;Data Siswa RPL&lt;/h2&gt;&lt;h1&gt;Selamat Datang&lt;/h1&gt;",
+        e: "&lt;header&gt;Data Siswa RPL&lt;/header&gt;&lt;div&gt;Selamat Datang&lt;/div&gt;"
       },
       kunci: "a"
     },
     {
       id: 2,
-      soal: "2. Bahasa pemrograman manakah yang berjalan secara terisolasi di sisi peramban (client-side)?",
+      soal: "2. Sintaks HTML yang benar untuk menampilkan gambar bernama 'logo.png' dengan teks alternatif (alt) 'Logo Sekolah' adalah...",
       opsi: {
-        a: "PHP",
-        b: "Python",
-        c: "JavaScript",
-        d: "Ruby",
-        e: "SQL"
+        a: "&lt;img path=\"logo.png\" title=\"Logo Sekolah\"&gt;",
+        b: "&lt;img src=\"logo.png\" alt=\"Logo Sekolah\"&gt;",
+        c: "&lt;image link=\"logo.png\" alt=\"Logo Sekolah\"&gt;",
+        d: "&lt;img href=\"logo.png\" text=\"Logo Sekolah\"&gt;",
+        e: "&lt;media source=\"logo.png\" description=\"Logo Sekolah\"&gt;"
+      },
+      kunci: "b"
+    },
+    {
+      id: 3,
+      soal: "3. Penulisan kode HTML yang tepat untuk membuat hyperlink menuju 'https://www.google.com' dengan teks 'Buka Google' yang terbuka di tab baru adalah...",
+      opsi: {
+        a: "&lt;a href=\"https://www.google.com\" target=\"_self\"&gt;Buka Google&lt;/a&gt;",
+        b: "&lt;a link=\"https://www.google.com\" open=\"new\"&gt;Buka Google&lt;/a&gt;",
+        c: "&lt;a href=\"https://www.google.com\" target=\"_blank\"&gt;Buka Google&lt;/a&gt;",
+        d: "&lt;a url=\"https://www.google.com\" window=\"_blank\"&gt;Buka Google&lt;/a&gt;",
+        e: "&lt;a redirect=\"https://www.google.com\" tab=\"_new\"&gt;Buka Google&lt;/a&gt;"
+      },
+      kunci: "c"
+    },
+    {
+      id: 4,
+      soal: "4. Tag HTML yang digunakan untuk membuat daftar berurutan (ordered list) berupa angka dengan item 'Kelas XI RPL 1' dan 'Kelas XI RPL 2' adalah...",
+      opsi: {
+        a: "&lt;ol&gt;&lt;li&gt;Kelas XI RPL 1&lt;/li&gt;&lt;li&gt;Kelas XI RPL 2&lt;/li&gt;&lt;/ol&gt;",
+        b: "&lt;ul&gt;&lt;li&gt;Kelas XI RPL 1&lt;/li&gt;&lt;li&gt;Kelas XI RPL 2&lt;/li&gt;&lt;/ul&gt;",
+        c: "&lt;list&gt;&lt;item&gt;Kelas XI RPL 1&lt;/item&gt;&lt;item&gt;Kelas XI RPL 2&lt;/item&gt;&lt;/list&gt;",
+        d: "&lt;dl&gt;&lt;dt&gt;Kelas XI RPL 1&lt;/dt&gt;&lt;dt&gt;Kelas XI RPL 2&lt;/dt&gt;&lt;/dl&gt;",
+        e: "&lt;ol&gt;&lt;list&gt;Kelas XI RPL 1&lt;/list&gt;&lt;list&gt;Kelas XI RPL 2&lt;/list&gt;&lt;/ol&gt;"
+      },
+      kunci: "a"
+    },
+    {
+      id: 5,
+      soal: "5. Struktur tag HTML yang benar untuk membentuk tabel sederhana 1 baris dan 2 kolom dengan isi 'NIS' dan 'Nama' adalah...",
+      opsi: {
+        a: "&lt;table&gt;&lt;row&gt;&lt;col&gt;NIS&lt;/col&gt;&lt;col&gt;Nama&lt;/col&gt;&lt;/row&gt;&lt;/table&gt;",
+        b: "&lt;table&gt;&lt;tr&gt;&lt;td&gt;NIS&lt;/td&gt;&lt;td&gt;Nama&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;",
+        c: "&lt;table&gt;&lt;th&gt;&lt;td&gt;NIS&lt;/td&gt;&lt;td&gt;Nama&lt;/td&gt;&lt;/th&gt;&lt;/table&gt;",
+        d: "&lt;table&gt;&lt;tr&gt;&lt;tc&gt;NIS&lt;/tc&gt;&lt;tc&gt;Nama&lt;/tc&gt;&lt;/tr&gt;&lt;/table&gt;",
+        e: "&lt;table&gt;&lt;td style=\"row\"&gt;NIS&lt;/td&gt;&lt;td style=\"row\"&gt;Nama&lt;/td&gt;&lt;/table&gt;"
+      },
+      kunci: "b"
+    },
+    {
+      id: 6,
+      soal: "6. Penerapan teknik Inline CSS yang tepat untuk mengubah warna teks pada tag paragraf menjadi merah (red) adalah...",
+      opsi: {
+        a: "&lt;p css=\"color: red;\"&gt;Teks Paragraf&lt;/p&gt;",
+        b: "&lt;p style=\"text-color: red;\"&gt;Teks Paragraf&lt;/p&gt;",
+        c: "&lt;p style=\"color: red;\"&gt;Teks Paragraf&lt;/p&gt;",
+        d: "&lt;p class=\"color-red\"&gt;Teks Paragraf&lt;/p&gt;",
+        e: "&lt;p color=\"red\"&gt;Teks Paragraf&lt;/p&gt;"
+      },
+      kunci: "c"
+    },
+    {
+      id: 7,
+      soal: "7. Penulisan Embedded CSS di dalam tag &lt;head&gt; yang berfungsi mengubah warna latar belakang seluruh halaman menjadi kuning (yellow) adalah...",
+      opsi: {
+        a: "&lt;style&gt;body { background-color: yellow; }&lt;/style&gt;",
+        b: "&lt;css&gt;body { background: yellow; }&lt;/css&gt;",
+        c: "&lt;script&gt;document.body.color = 'yellow';&lt;/script&gt;",
+        d: "&lt;style&gt;page { color-background: yellow; }&lt;/style&gt;",
+        e: "&lt;link rel=\"stylesheet\" color=\"yellow\"&gt;"
+      },
+      kunci: "a"
+    },
+    {
+      id: 8,
+      soal: "8. Sintaks HTML yang benar pada tag &lt;link&gt; untuk menghubungkan berkas HTML dengan file CSS eksternal bernama 'style.css' adalah...",
+      opsi: {
+        a: "&lt;link script=\"style.css\" type=\"text/css\"&gt;",
+        b: "&lt;link rel=\"stylesheet\" href=\"style.css\"&gt;",
+        c: "&lt;link src=\"style.css\" type=\"stylesheet\"&gt;",
+        d: "&lt;link href=\"style.css\" rel=\"css\"&gt;",
+        e: "&lt;link import=\"style.css\" type=\"text/css\"&gt;"
+      },
+      kunci: "b"
+    },
+    {
+      id: 9,
+      soal: "9. Pernyataan yang paling tepat mengenai letak penulisan Inline CSS, Embedded CSS, dan External CSS adalah...",
+      opsi: {
+        a: "Inline di tag &lt;head&gt;, Embedded di atribut style, External di berkas terpisah",
+        b: "Inline di atribut style, Embedded di tag &lt;style&gt;, External di berkas .css terpisah",
+        c: "Inline di berkas .css terpisah, Embedded di tag &lt;head&gt;, External di atribut style",
+        d: "Inline di tag &lt;style&gt;, Embedded di tag &lt;body&gt;, External di berkas .js terpisah",
+        e: "Inline di atribut class, Embedded di tag &lt;script&gt;, External di tag &lt;link&gt;"
+      },
+      kunci: "b"
+    },
+    {
+      id: 10,
+      soal: "10. Jika terdapat aturan CSS eksternal berupa .judul { color: blue; }, cara memanggil class tersebut pada elemen &lt;h2&gt; di HTML adalah...",
+      opsi: {
+        a: "&lt;h2 id=\"judul\"&gt;Judul Halaman&lt;/h2&gt;",
+        b: "&lt;h2 style=\"judul\"&gt;Judul Halaman&lt;/h2&gt;",
+        c: "&lt;h2 class=\"judul\"&gt;Judul Halaman&lt;/h2&gt;",
+        d: "&lt;h2 name=\"judul\"&gt;Judul Halaman&lt;/h2&gt;",
+        e: "&lt;h2 call=\".judul\"&gt;Judul Halaman&lt;/h2&gt;"
       },
       kunci: "c"
     }
-    // Soal 3-10 akan diisikan otomatis setelah Anda mengirimkan daftar soalnya.
   ];
 
   let dataPeserta = { nama: "", kelas: "" };
@@ -148,7 +246,7 @@
         html += `
           <label class="opsi-label">
             <input type="radio" name="soal_${q.id}" value="${key}" required>
-            <span><strong>${key.toUpperCase()}.</strong> ${q.opsi[key]}</span>
+            <span><strong>${key.toUpperCase()}.</strong> <code>${q.opsi[key]}</code></span>
           </label>
         `;
       }
@@ -165,7 +263,7 @@
     });
 
     if (!semuaTerisi) {
-      alert("Harap jawab semua soal sebelum mengirimkan!");
+      alert("Harap jawab semua 10 soal sebelum mengirimkan!");
       return;
     }
 
@@ -187,12 +285,11 @@
 
     const skorTotal = (benar / bankSoal.length) * 100;
 
-    // Tampilkan Loading pada tombol
     const btnSubmit = document.getElementById('btn-submit');
     btnSubmit.innerText = "Mengirimkan Nilai...";
     btnSubmit.disabled = true;
 
-    // Kirim data asynchronous ke Google Apps Script
+    // Kirim data ke Google Apps Script
     fetch(GAS_WEB_APP_URL, {
       method: 'POST',
       mode: 'no-cors',
@@ -209,7 +306,6 @@
     })
     .catch((error) => {
       console.error("Gagal mengirim data:", error);
-      // Tetap tampilkan hasil meski koneksi simpan error
       tampilkanHalamanHasil(skorTotal);
     });
   }
@@ -228,11 +324,11 @@
 
     if (skor >= 80) {
       statusText.innerHTML = `<span class="status-lulus">SELAMAT! Anda Tuntas (LULUS)</span>`;
-      pesanDetail.innerText = "Nilai Anda telah memenuhi batas ketuntasan minimal (KKM >= 80).";
+      pesanDetail.innerText = "Nilai Anda telah mencapai batas ketuntasan minimal (KKM >= 80). Hasil ujian Anda telah dicatat.";
       actionRemedial.classList.add('hidden');
     } else {
       statusText.innerHTML = `<span class="status-gagal">TIDAK TUNTAS (GAGAL)</span>`;
-      pesanDetail.innerText = "Nilai Anda di bawah 80. Sesuai aturan, Anda tidak dapat melihat kunci jawaban dan wajib mengulang ujian.";
+      pesanDetail.innerText = "Nilai Anda di bawah 80. Sesuai aturan ketuntasan minimal, Anda tidak dapat melihat kunci jawaban dan wajib mengulang ujian dari awal.";
       actionRemedial.classList.remove('hidden');
     }
   }
@@ -252,7 +348,7 @@
     isUjianAktif = true;
   }
 
-  // === ANTI-CHEAT & FULLSCREEN ===
+  // === SISTEM ANTI-CHEAT & FULLSCREEN ===
   function openFullscreen() {
     const elem = document.documentElement;
     if (elem.requestFullscreen) elem.requestFullscreen();
