@@ -3,78 +3,459 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CBT Online - Pemrograman Web XI RPL</title>
+  <title>CBT Pro - Pemrograman Web XI RPL</title>
+  <!-- Google Fonts & FontAwesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: #f4f6f9; margin: 0; padding: 20px; user-select: none; }
-    .container { max-width: 800px; background: #fff; margin: 0 auto; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-    h2 { text-align: center; color: #2c3e50; margin-top: 0; }
-    .form-group { margin-bottom: 15px; }
-    label { display: block; margin-bottom: 5px; font-weight: bold; color: #333; }
-    input[type="text"] { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; }
-    .btn { background: #27ae60; color: white; border: none; padding: 12px 24px; font-size: 16px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; }
-    .btn:hover { background: #219150; }
-    .btn:disabled { background: #95a5a6; cursor: not-allowed; }
-    .soal-box { margin-bottom: 25px; padding: 15px; border-bottom: 1px solid #eee; }
-    .soal-text { font-size: 16px; font-weight: 600; color: #2c3e50; margin-bottom: 12px; line-height: 1.5; }
-    .opsi-label { display: flex; align-items: center; padding: 10px 14px; margin: 6px 0; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer; transition: 0.2s; }
-    .opsi-label:hover { background: #edf2f7; }
-    .opsi-label input { margin-right: 12px; transform: scale(1.2); }
-    #pelanggaran-bar { background: #e74c3c; color: white; text-align: center; padding: 10px; font-weight: bold; position: fixed; top: 0; left: 0; width: 100%; display: none; z-index: 1000; }
-    .result-box { text-align: center; padding: 20px; }
-    .status-lulus { color: #27ae60; font-size: 24px; font-weight: bold; }
-    .status-gagal { color: #c0392b; font-size: 24px; font-weight: bold; }
-    .hidden { display: none; }
-    code { background: #f1f1f1; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --accent: #06b6d4;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    
+    body {
+      background: #0f172a;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      user-select: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 850px;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Warning Top Bar */
+    #pelanggaran-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(239, 68, 68, 0.9);
+      backdrop-filter: blur(8px);
+      color: white;
+      padding: 12px 20px;
+      font-weight: 700;
+      font-size: 14px;
+      text-align: center;
+      display: none;
+      z-index: 9999;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+      letter-spacing: 0.5px;
+    }
+
+    .badge-v {
+      background: #fff;
+      color: var(--danger);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 800;
+    }
+
+    /* Headers */
+    .header-title {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .header-title h1 {
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .header-title p {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* Rules Banner */
+    .rules-card {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .rules-card i {
+      font-size: 24px;
+      color: var(--danger);
+    }
+
+    .rules-text {
+      font-size: 13px;
+      color: #fca5a5;
+      line-height: 1.5;
+    }
+
+    /* Form & Inputs */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .input-control {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      padding: 14px 18px;
+      border-radius: 12px;
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .input-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+    }
+
+    /* Buttons */
+    .btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 25px -5px rgba(99, 102, 241, 0.5);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Exam Topbar */
+    .exam-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.5);
+      padding: 16px 20px;
+      border-radius: 16px;
+      margin-bottom: 30px;
+      border: 1px solid var(--card-border);
+    }
+
+    .user-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+    }
+
+    .kkm-badge {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--warning);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    /* Soal Card */
+    .soal-card {
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+      transition: border-color 0.3s ease;
+    }
+
+    .soal-card:hover {
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .soal-title {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.6;
+      margin-bottom: 18px;
+      color: #f1f5f9;
+    }
+
+    /* Opsi Jawaban */
+    .opsi-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .opsi-item {
+      display: flex;
+      align-items: center;
+      padding: 14px 18px;
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .opsi-item:hover {
+      background: rgba(99, 102, 241, 0.1);
+      border-color: rgba(99, 102, 241, 0.4);
+    }
+
+    .opsi-item input[type="radio"] {
+      display: none;
+    }
+
+    .opsi-key {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      margin-right: 14px;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+    }
+
+    .opsi-item input[type="radio"]:checked + .opsi-key {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+    }
+
+    .opsi-item input[type="radio"]:checked ~ .opsi-text {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .opsi-text {
+      font-size: 14px;
+      color: #cbd5e1;
+      flex: 1;
+    }
+
+    code {
+      font-family: 'Fira Code', monospace;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 3px 8px;
+      border-radius: 6px;
+      color: #38bdf8;
+      font-size: 13px;
+    }
+
+    /* Result Box */
+    .result-container {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .score-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, 0.8);
+      border: 4px solid var(--primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 20px auto;
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+    }
+
+    .score-number {
+      font-size: 44px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .score-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+    }
+
+    .status-badge-pass {
+      color: var(--success);
+      font-size: 22px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .status-badge-fail {
+      color: var(--danger);
+      font-size: 22px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
-<div id="pelanggaran-bar">PERINGATAN! Anda keluar dari mode ujian. Pelanggaran tercatat: <span id="violation-count">0</span>x</div>
+<div id="pelanggaran-bar">
+  <i class="fa-solid fa-triangle-exclamation"></i> PERINGATAN! Keluar dari Layar Ujian. Total Pelanggaran: <span class="badge-v" id="violation-count">0</span>x
+</div>
 
 <div class="container">
   <!-- Halaman Login -->
   <div id="page-login">
-    <h2>CBT Pemrograman Web XI RPL</h2>
-    <p style="text-align: center; color: #e74c3c; font-size: 14px; line-height: 1.4;">
-      * Nilai Ketuntasan Minimal (KKM) adalah <strong>80</strong> (Minimal Benar 8 Soal).<br>
-      Jika nilai di bawah 80, Anda wajib mengulang ujian dari awal.<br>
-      Dilarang keluar dari layar penuh / berpindah tab selama ujian!
-    </p>
-    <div class="form-group">
-      <label>Nama Lengkap</label>
-      <input type="text" id="nama" placeholder="Masukkan Nama Lengkap" required autocomplete="off">
+    <div class="header-title">
+      <h1>CBT Pemrograman Web</h1>
+      <p>Penilaian Sumatif Tengah Semester (PSTS) - Kelas XI RPL</p>
     </div>
-    <div class="form-group">
-      <label>Kelas / Rombel</label>
-      <input type="text" id="kelas" placeholder="Contoh: XI RPL 1" required autocomplete="off">
+
+    <div class="rules-card">
+      <i class="fa-solid fa-shield-halved"></i>
+      <div class="rules-text">
+        <strong>Aturan Ujian Strict KKM 80:</strong><br>
+        • Wajib mencapai skor minimal <strong>80</strong> (Benar minimal 8 Soal).<br>
+        • Jika di bawah 80, Anda wajib mengulang ujian dari awal.<br>
+        • Sistem mendeteksi otomatis jika Anda keluar layar / membuka tab lain.
+      </div>
     </div>
-    <button class="btn" onclick="mulaiUjian()">Mulai Ujian Now</button>
+
+    <div class="form-group">
+      <label>Nama Lengkap Siswa</label>
+      <input type="text" id="nama" class="input-control" placeholder="Masukkan nama sesuai presensi" required autocomplete="off">
+    </div>
+
+    <div class="form-group">
+      <label>Kelas / Rombongan Belajar</label>
+      <input type="text" id="kelas" class="input-control" placeholder="Contoh: XI RPL 1" required autocomplete="off">
+    </div>
+
+    <button class="btn" onclick="mulaiUjian()">
+      <span>Mulai Ujian Sekarang</span>
+      <i class="fa-solid fa-arrow-right"></i>
+    </button>
   </div>
 
   <!-- Halaman Ujian -->
   <div id="page-ujian" class="hidden">
-    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px;">
-      <span id="display-peserta" style="font-weight: bold;"></span>
-      <span style="background: #e67e22; color: white; padding: 4px 10px; border-radius: 4px; font-size: 14px;">KKM: 80</span>
+    <div class="exam-header">
+      <div class="user-badge">
+        <div class="user-avatar" id="avatar-initial">U</div>
+        <div>
+          <div id="display-nama" style="color: #fff;">Nama Siswa</div>
+          <div id="display-kelas" style="font-size: 12px; color: var(--text-muted);">Kelas</div>
+        </div>
+      </div>
+      <div class="kkm-badge">
+        <i class="fa-solid fa-bullseye"></i> KKM: 80
+      </div>
     </div>
 
     <form id="form-soal">
       <div id="soal-container"></div>
-      <button type="button" class="btn" id="btn-submit" onclick="konfirmasiSelesai()">Kirim Jawaban</button>
+      <button type="button" class="btn" id="btn-submit" onclick="konfirmasiSelesai()">
+        <i class="fa-solid fa-paper-plane"></i>
+        <span>Kirim Seluruh Jawaban</span>
+      </button>
     </form>
   </div>
 
   <!-- Halaman Hasil -->
   <div id="page-hasil" class="hidden">
-    <div class="result-box">
-      <h2>Hasil Ujian</h2>
-      <p style="font-size: 18px;">Skor Akhir Anda:</p>
-      <div id="display-skor" style="font-size: 48px; font-weight: bold; margin: 10px 0;">0</div>
-      <div id="status-text"></div>
-      <p id="pesan-detail" style="margin-top: 15px; color: #555;"></p>
-      <div id="action-remedial" class="hidden" style="margin-top: 25px;">
-        <button class="btn" style="background: #e67e22;" onclick="ulangUjian()">Mengulang Ujian Baru</button>
+    <div class="result-container">
+      <h2 style="font-size: 24px; font-weight: 800;">Laporan Hasil Ujian</h2>
+      <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px;">Sistem Evaluasi Ketuntasan Minimal</p>
+
+      <div class="score-circle">
+        <span class="score-number" id="display-skor">0</span>
+        <span class="score-label">Skor Akhir</span>
+      </div>
+
+      <div id="status-box"></div>
+      <p id="pesan-detail" style="margin-top: 16px; color: var(--text-muted); font-size: 14px; line-height: 1.6; max-width: 500px; margin-left: auto; margin-right: auto;"></p>
+
+      <div id="action-remedial" class="hidden" style="margin-top: 30px;">
+        <button class="btn" style="background: linear-gradient(135deg, var(--warning), #d97706);" onclick="ulangUjian()">
+          <i class="fa-solid fa-rotate-right"></i>
+          <span>Mengulang Ujian Kembali</span>
+        </button>
       </div>
     </div>
   </div>
@@ -217,14 +598,17 @@
     const kelas = document.getElementById('kelas').value.trim();
 
     if (!nama || !kelas) {
-      alert("Harap isi Nama dan Kelas terlebih dahulu!");
+      alert("Harap lengkapi Nama dan Kelas Anda terlebih dahulu!");
       return;
     }
 
     dataPeserta.nama = nama;
     dataPeserta.kelas = kelas;
 
-    document.getElementById('display-peserta').innerText = `${nama} (${kelas})`;
+    document.getElementById('display-nama').innerText = nama;
+    document.getElementById('display-kelas').innerText = kelas;
+    document.getElementById('avatar-initial').innerText = nama.charAt(0).toUpperCase();
+
     document.getElementById('page-login').classList.add('hidden');
     document.getElementById('page-ujian').classList.remove('hidden');
 
@@ -239,18 +623,20 @@
     container.innerHTML = "";
 
     bankSoal.forEach((q) => {
-      let html = `<div class="soal-box">
-        <div class="soal-text">${q.soal}</div>`;
+      let html = `<div class="soal-card">
+        <div class="soal-title">${q.soal}</div>
+        <div class="opsi-list">`;
       
       for (let key in q.opsi) {
         html += `
-          <label class="opsi-label">
+          <label class="opsi-item">
             <input type="radio" name="soal_${q.id}" value="${key}" required>
-            <span><strong>${key.toUpperCase()}.</strong> <code>${q.opsi[key]}</code></span>
+            <span class="opsi-key">${key.toUpperCase()}</span>
+            <span class="opsi-text"><code>${q.opsi[key]}</code></span>
           </label>
         `;
       }
-      html += `</div>`;
+      html += `</div></div>`;
       container.innerHTML += html;
     });
   }
@@ -263,11 +649,11 @@
     });
 
     if (!semuaTerisi) {
-      alert("Harap jawab semua 10 soal sebelum mengirimkan!");
+      alert("Harap dijawab semua 10 soal sebelum dikirimkan!");
       return;
     }
 
-    if (confirm("Apakah Anda yakin ingin menyelesaikan ujian?")) {
+    if (confirm("Apakah Anda yakin ingin menyelesaikan dan mengirimkan jawaban?")) {
       hitungHasil();
     }
   }
@@ -286,10 +672,10 @@
     const skorTotal = (benar / bankSoal.length) * 100;
 
     const btnSubmit = document.getElementById('btn-submit');
-    btnSubmit.innerText = "Mengirimkan Nilai...";
+    btnSubmit.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Mengirim Nilai...</span>`;
     btnSubmit.disabled = true;
 
-    // Kirim data ke Google Apps Script
+    // Fetch ke Google Apps Script Background
     fetch(GAS_WEB_APP_URL, {
       method: 'POST',
       mode: 'no-cors',
@@ -305,7 +691,7 @@
       tampilkanHalamanHasil(skorTotal);
     })
     .catch((error) => {
-      console.error("Gagal mengirim data:", error);
+      console.error("Error:", error);
       tampilkanHalamanHasil(skorTotal);
     });
   }
@@ -318,17 +704,17 @@
 
     document.getElementById('display-skor').innerText = skor;
 
-    const statusText = document.getElementById('status-text');
+    const statusBox = document.getElementById('status-box');
     const pesanDetail = document.getElementById('pesan-detail');
     const actionRemedial = document.getElementById('action-remedial');
 
     if (skor >= 80) {
-      statusText.innerHTML = `<span class="status-lulus">SELAMAT! Anda Tuntas (LULUS)</span>`;
-      pesanDetail.innerText = "Nilai Anda telah mencapai batas ketuntasan minimal (KKM >= 80). Hasil ujian Anda telah dicatat.";
+      statusBox.innerHTML = `<div class="status-badge-pass"><i class="fa-solid fa-circle-check"></i> TUNTAS (LULUS)</div>`;
+      pesanDetail.innerText = "Selamat! Nilai Anda telah memenuhi batas ketuntasan minimal (KKM >= 80). Jawaban Anda telah sukses tersimpan di sistem.";
       actionRemedial.classList.add('hidden');
     } else {
-      statusText.innerHTML = `<span class="status-gagal">TIDAK TUNTAS (GAGAL)</span>`;
-      pesanDetail.innerText = "Nilai Anda di bawah 80. Sesuai aturan ketuntasan minimal, Anda tidak dapat melihat kunci jawaban dan wajib mengulang ujian dari awal.";
+      statusBox.innerHTML = `<div class="status-badge-fail"><i class="fa-solid fa-circle-xmark"></i> BELUM TUNTAS (REMEDIAL)</div>`;
+      pesanDetail.innerText = "Nilai Anda belum mencapai KKM (80). Sesuai aturan, Anda wajib mengulang ujian kembali hingga tuntas.";
       actionRemedial.classList.remove('hidden');
     }
   }
@@ -341,14 +727,14 @@
     document.getElementById('form-soal').reset();
     
     const btnSubmit = document.getElementById('btn-submit');
-    btnSubmit.innerText = "Kirim Jawaban";
+    btnSubmit.innerHTML = `<i class="fa-solid fa-paper-plane"></i> <span>Kirim Seluruh Jawaban</span>`;
     btnSubmit.disabled = false;
 
     openFullscreen();
     isUjianAktif = true;
   }
 
-  // === SISTEM ANTI-CHEAT & FULLSCREEN ===
+  // ANTI-CHEAT ENGINE
   function openFullscreen() {
     const elem = document.documentElement;
     if (elem.requestFullscreen) elem.requestFullscreen();
@@ -367,20 +753,20 @@
     document.addEventListener('webkitfullscreenchange', handleViolation);
 
     window.addEventListener('blur', function() {
-      if (isUjianAktif) catatPelanggaran("Berpindah aplikasi / Tab browser");
+      if (isUjianAktif) catatPelanggaran("Beralih Tab / Aplikasi lain");
     });
   }
 
   function handleViolation() {
     if (isUjianAktif && !document.fullscreenElement && !document.webkitFullscreenElement) {
-      catatPelanggaran("Keluar dari layar penuh (Fullscreen)");
+      catatPelanggaran("Keluar dari Mode Fullscreen Ujian");
     }
   }
 
   function catatPelanggaran(alasan) {
     jumlahPelanggaran++;
     document.getElementById('violation-count').innerText = jumlahPelanggaran;
-    alert(`PERINGATAN PELANGGARAN (${jumlahPelanggaran}x)!\nAlasan: ${alasan}.\nKembali fokus ke halaman ujian!`);
+    alert(`PERINGATAN PELANGGARAN TERDETEKSI (${jumlahPelanggaran}x)!\nAlasan: ${alasan}.\nHarap kembali fokus ke lembar ujian!`);
     if (isUjianAktif) openFullscreen();
   }
 </script>
