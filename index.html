@@ -96,11 +96,22 @@
     }
     .btn:hover { transform: translateY(-2px); }
 
+    .btn-pause {
+      background: linear-gradient(135deg, var(--warning) 0%, #d97706 100%);
+      color: white; border: none; padding: 8px 16px; border-radius: 30px;
+      font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;
+    }
+    .btn-pause:hover { opacity: 0.9; }
+
     /* Layout Ujian Coding */
     .exam-topbar {
       display: flex; justify-content: space-between; align-items: center;
       background: rgba(15, 23, 42, 0.8); border: 1px solid var(--card-border);
       padding: 16px 24px; border-radius: 16px; margin-bottom: 20px;
+    }
+
+    .right-controls {
+      display: flex; align-items: center; gap: 12px;
     }
 
     .timer-badge {
@@ -143,6 +154,20 @@
       flex: 1; width: 100%; height: 100%; background: #ffffff; border: none;
     }
 
+    /* Modal Overlay Pause / Istirahat */
+    #pause-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px);
+      z-index: 10000; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center; padding: 20px;
+    }
+
+    .pause-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 24px; padding: 40px; max-width: 450px; width: 100%;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
     .hidden { display: none !important; }
 
     /* Result Circle */
@@ -157,6 +182,21 @@
 
 <div id="pelanggaran-bar">
   <i class="fa-solid fa-triangle-exclamation"></i> PERINGATAN! Keluar dari Layar Ujian. Pelanggaran: <span class="badge-v" id="violation-count">0</span>x
+</div>
+
+<!-- Overlay Istirahat / Pause -->
+<div id="pause-overlay" class="hidden">
+  <div class="pause-card">
+    <div style="font-size: 50px; color: var(--warning); margin-bottom: 16px;">
+      <i class="fa-solid fa-mug-hot"></i>
+    </div>
+    <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">Ujian Sedang Dipause</h2>
+    <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px;">Waktu dipause untuk istirahat. Klik tombol di bawah jika sudah siap melanjutkan ngoding.</p>
+    <button class="btn" style="background: linear-gradient(135deg, var(--success) 0%, #059669 100%);" onclick="resumeUjian()">
+      <i class="fa-solid fa-play"></i>
+      <span>Lanjutkan Ngoding</span>
+    </button>
+  </div>
 </div>
 
 <div class="container">
@@ -191,9 +231,14 @@
         <div id="display-kelas" style="font-size: 12px; color: var(--text-muted);">Kelas</div>
       </div>
 
-      <div class="timer-badge">
-        <i class="fa-solid fa-clock"></i>
-        <span id="timer-display">10:00</span>
+      <div class="right-controls">
+        <button class="btn-pause" onclick="pauseUjian()">
+          <i class="fa-solid fa-pause"></i> Istirahat / Pause
+        </button>
+        <div class="timer-badge">
+          <i class="fa-solid fa-clock"></i>
+          <span id="timer-display">10:00</span>
+        </div>
       </div>
     </div>
 
@@ -273,6 +318,7 @@
   let dataPeserta = { nama: "", kelas: "" };
   let jumlahPelanggaran = 0;
   let isUjianAktif = false;
+  let isPaused = false;
   let timerInterval = null;
   let totalDetik = 600; // 10 Menit = 600 Detik
 
@@ -316,22 +362,41 @@
   }
 
   function startTimer() {
+    if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(() => {
-      totalDetik--;
-      let menit = Math.floor(totalDetik / 60);
-      let detik = totalDetik % 60;
+      if (!isPaused) {
+        totalDetik--;
+        let menit = Math.floor(totalDetik / 60);
+        let detik = totalDetik % 60;
 
-      menit = menit < 10 ? '0' + menit : menit;
-      detik = detik < 10 ? '0' + detik : detik;
+        menit = menit < 10 ? '0' + menit : menit;
+        detik = detik < 10 ? '0' + detik : detik;
 
-      document.getElementById('timer-display').innerText = `${menit}:${detik}`;
+        document.getElementById('timer-display').innerText = `${menit}:${detik}`;
 
-      if (totalDetik <= 0) {
-        clearInterval(timerInterval);
-        alert("Waktu 10 menit telah habis! Kode Anda akan otomatis dikirim.");
-        hitungHasil();
+        if (totalDetik <= 0) {
+          clearInterval(timerInterval);
+          alert("Waktu 10 menit telah habis! Kode Anda akan otomatis dikirim.");
+          hitungHasil();
+        }
       }
     }, 1000);
+  }
+
+  function pauseUjian() {
+    isPaused = true;
+    document.getElementById('pause-overlay').classList.remove('hidden');
+    document.getElementById('pelanggaran-bar').style.display = 'none';
+    closeFullscreen();
+  }
+
+  function resumeUjian() {
+    isPaused = false;
+    document.getElementById('pause-overlay').classList.add('hidden');
+    if (isUjianAktif) {
+      document.getElementById('pelanggaran-bar').style.display = 'block';
+      openFullscreen();
+    }
   }
 
   function updatePreview() {
@@ -359,21 +424,21 @@
     let skorTotal = 0;
 
     // EVALUASI AUTO-GRADING 15 KRITERIA
-    if (/<h[1-6][^>]*>.*?<\/h[1-6]>/.test(userCode)) skorTotal += 7; // 1. Heading
-    if (/<p[^>]*>.*?<\/p>/.test(userCode)) skorTotal += 7; // 2. Paragraf
-    if (/<(b|strong)[^>]*>.*?<\/(b|strong)>/.test(userCode)) skorTotal += 7; // 3. Tebal
-    if (/<(i|em)[^>]*>.*?<\/(i|em)>/.test(userCode)) skorTotal += 7; // 4. Miring
-    if (/<(u|ins)[^>]*>.*?<\/(u|ins)>/.test(userCode)) skorTotal += 6; // 5. Garis Bawah
-    if (/<img\s+[^>]*src=["'].*?["'][^>]*>/i.test(userCode)) skorTotal += 7; // 6. Gambar
-    if (/<a\s+[^>]*href=["'].*?["'][^>]*>.*?<\/a>/i.test(userCode)) skorTotal += 7; // 7. Link/Hyperlink
-    if (/<(ol|ul)[^>]*>.*?<\/(ol|ul)>/s.test(userCode)) skorTotal += 7; // 8. List Container
-    if (/<li[^>]*>.*?<\/li>/.test(userCode)) skorTotal += 6; // 9. List Item
-    if (/<table[^>]*>.*?<\/table>/s.test(userCode)) skorTotal += 7; // 10. Table
-    if (/<tr[^>]*>.*?<\/tr>/s.test(userCode) && /<(td|th)[^>]*>.*?<\/(td|th)>/.test(userCode)) skorTotal += 6; // 11. Table Row & Cell
-    if (/<(hr|br)\s*\/?>/.test(userCode)) skorTotal += 6; // 12. hr/br
-    if (/style\s*=\s*["'][^"']*color\s*:[^"']*["']/i.test(userCode)) skorTotal += 7; // 13. Inline Style Color
-    if (/<input\s+[^>]*type=["'].*?["'][^>]*>/i.test(userCode) || /<form[^>]*>/i.test(userCode)) skorTotal += 7; // 14. Input/Form
-    if (/<button[^>]*>.*?<\/button>/i.test(userCode)) skorTotal += 6; // 15. Button
+    if (/<h[1-6][^>]*>.*?<\/h[1-6]>/.test(userCode)) skorTotal += 7;
+    if (/<p[^>]*>.*?<\/p>/.test(userCode)) skorTotal += 7;
+    if (/<(b|strong)[^>]*>.*?<\/(b|strong)>/.test(userCode)) skorTotal += 7;
+    if (/<(i|em)[^>]*>.*?<\/(i|em)>/.test(userCode)) skorTotal += 7;
+    if (/<(u|ins)[^>]*>.*?<\/(u|ins)>/.test(userCode)) skorTotal += 6;
+    if (/<img\s+[^>]*src=["'].*?["'][^>]*>/i.test(userCode)) skorTotal += 7;
+    if (/<a\s+[^>]*href=["'].*?["'][^>]*>.*?<\/a>/i.test(userCode)) skorTotal += 7;
+    if (/<(ol|ul)[^>]*>.*?<\/(ol|ul)>/s.test(userCode)) skorTotal += 7;
+    if (/<li[^>]*>.*?<\/li>/.test(userCode)) skorTotal += 6;
+    if (/<table[^>]*>.*?<\/table>/s.test(userCode)) skorTotal += 7;
+    if (/<tr[^>]*>.*?<\/tr>/s.test(userCode) && /<(td|th)[^>]*>.*?<\/(td|th)>/.test(userCode)) skorTotal += 6;
+    if (/<(hr|br)\s*\/?>/.test(userCode)) skorTotal += 6;
+    if (/style\s*=\s*["'][^"']*color\s*:[^"']*["']/i.test(userCode)) skorTotal += 7;
+    if (/<input\s+[^>]*type=["'].*?["'][^>]*>/i.test(userCode) || /<form[^>]*>/i.test(userCode)) skorTotal += 7;
+    if (/<button[^>]*>.*?<\/button>/i.test(userCode)) skorTotal += 6;
 
     if (skorTotal > 100) skorTotal = 100;
 
@@ -428,8 +493,10 @@
   function ulangUjian() {
     jumlahPelanggaran = 0;
     totalDetik = 600;
+    isPaused = false;
     document.getElementById('violation-count').innerText = 0;
     document.getElementById('page-hasil').classList.add('hidden');
+    document.getElementById('pause-overlay').classList.add('hidden');
     document.getElementById('page-ujian').classList.remove('hidden');
     document.getElementById('code-input').value = defaultCode;
     updatePreview();
@@ -462,12 +529,12 @@
     document.addEventListener('webkitfullscreenchange', handleViolation);
 
     window.addEventListener('blur', function() {
-      if (isUjianAktif) catatPelanggaran("Berpindah aplikasi / Tab browser");
+      if (isUjianAktif && !isPaused) catatPelanggaran("Berpindah aplikasi / Tab browser");
     });
   }
 
   function handleViolation() {
-    if (isUjianAktif && !document.fullscreenElement && !document.webkitFullscreenElement) {
+    if (isUjianAktif && !isPaused && !document.fullscreenElement && !document.webkitFullscreenElement) {
       catatPelanggaran("Keluar dari Mode Fullscreen Ujian");
     }
   }
@@ -476,7 +543,7 @@
     jumlahPelanggaran++;
     document.getElementById('violation-count').innerText = jumlahPelanggaran;
     alert(`PERINGATAN PELANGGARAN (${jumlahPelanggaran}x)!\nAlasan: ${alasan}.\nKembali fokus ke editor ujian!`);
-    if (isUjianAktif) openFullscreen();
+    if (isUjianAktif && !isPaused) openFullscreen();
   }
 </script>
 
