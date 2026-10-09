@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CBT Practice - Ujian Live Coding 15 Materi HTML & CSS</title>
-  <!-- Google Fonts & FontAwesome -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -27,13 +26,12 @@
 
     body {
       background: #0f172a;
-      background-image: 
-        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      user-select: none; /* Mencegah seleksi teks/copas soal */
+      -webkit-user-select: none;
     }
 
     #pelanggaran-bar {
@@ -42,9 +40,9 @@
       background: rgba(239, 68, 68, 0.95);
       backdrop-filter: blur(8px);
       color: white;
-      padding: 10px 20px;
+      padding: 10px 16px;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 13px;
       text-align: center;
       display: none;
       z-index: 9999;
@@ -55,105 +53,94 @@
     .container {
       width: 100%;
       max-width: 1250px;
-      margin: 20px auto;
-      padding: 20px;
+      margin: 0 auto;
+      padding: 16px;
       flex: 1;
     }
 
-    /* Card Login & Hasil */
     .card-box {
       background: var(--card-bg);
       backdrop-filter: blur(16px);
       border: 1px solid var(--card-border);
-      border-radius: 24px;
-      padding: 40px;
+      border-radius: 20px;
+      padding: 24px;
       max-width: 600px;
-      margin: 40px auto;
+      margin: 20px auto;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
 
-    .header-title { text-align: center; margin-bottom: 24px; }
+    .header-title { text-align: center; margin-bottom: 20px; }
     .header-title h1 {
-      font-size: 26px; font-weight: 800;
+      font-size: 22px; font-weight: 800;
       background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
+    .header-title p { font-size: 13px; color: var(--text-muted); }
 
-    .form-group { margin-bottom: 20px; }
-    .form-group label { display: block; font-size: 13px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; }
     .input-control {
       width: 100%; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--card-border);
-      padding: 14px 18px; border-radius: 12px; color: #fff; font-size: 15px; outline: none;
+      padding: 12px 16px; border-radius: 12px; color: #fff; font-size: 14px; outline: none;
     }
 
     .btn {
       width: 100%; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
-      color: white; border: none; padding: 14px 20px; border-radius: 12px; font-size: 16px; font-weight: 700;
-      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
-      box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
+      color: white; border: none; padding: 12px 18px; border-radius: 12px; font-size: 15px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
     }
-    .btn:hover { transform: translateY(-2px); }
 
     .btn-pause {
       background: linear-gradient(135deg, var(--warning) 0%, #d97706 100%);
-      color: white; border: none; padding: 8px 16px; border-radius: 30px;
-      font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;
+      color: white; border: none; padding: 6px 12px; border-radius: 20px;
+      font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;
     }
-    .btn-pause:hover { opacity: 0.9; }
 
-    /* Layout Ujian Coding */
     .exam-topbar {
-      display: flex; justify-content: space-between; align-items: center;
-      background: rgba(15, 23, 42, 0.8); border: 1px solid var(--card-border);
-      padding: 16px 24px; border-radius: 16px; margin-bottom: 20px;
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      flex-wrap: wrap; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--card-border);
+      padding: 12px 16px; border-radius: 16px; margin-bottom: 16px;
     }
 
-    .right-controls {
-      display: flex; align-items: center; gap: 12px;
-    }
+    .right-controls { display: flex; align-items: center; gap: 10px; }
 
     .timer-badge {
       background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3);
-      color: #fca5a5; padding: 8px 16px; border-radius: 30px; font-weight: 800; font-size: 18px;
-      display: flex; align-items: center; gap: 8px;
+      color: #fca5a5; padding: 6px 12px; border-radius: 20px; font-weight: 800; font-size: 15px;
+      display: flex; align-items: center; gap: 6px;
     }
 
     .soal-instruction {
       background: rgba(30, 41, 59, 0.6); border: 1px solid var(--card-border);
-      border-radius: 16px; padding: 20px; margin-bottom: 20px; font-size: 13px; line-height: 1.6;
+      border-radius: 16px; padding: 16px; margin-bottom: 16px; font-size: 12px; line-height: 1.5;
     }
+    
     .soal-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; margin-top: 10px; color: var(--text-muted);
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 12px; margin-top: 10px; color: var(--text-muted);
     }
-    .soal-grid div { display: flex; align-items: center; gap: 6px; }
 
-    .editor-container {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 20px; min-height: 500px;
-    }
+    .editor-container { display: grid; grid-template-columns: 1fr; gap: 16px; }
 
     .pane {
       display: flex; flex-direction: column; background: rgba(15, 23, 42, 0.9);
-      border: 1px solid var(--card-border); border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--card-border); border-radius: 16px; overflow: hidden; height: 320px;
     }
 
     .pane-header {
-      background: rgba(30, 41, 59, 0.8); padding: 12px 18px; font-weight: 700; font-size: 13px;
+      background: rgba(30, 41, 59, 0.8); padding: 10px 14px; font-weight: 700; font-size: 12px;
       color: var(--text-muted); display: flex; align-items: center; justify-content: space-between;
       border-bottom: 1px solid var(--card-border);
     }
 
     textarea#code-input {
       flex: 1; width: 100%; height: 100%; background: #090d16; color: #38bdf8;
-      border: none; padding: 18px; font-family: 'Fira Code', monospace; font-size: 13.5px;
-      line-height: 1.6; resize: none; outline: none; tab-size: 2;
+      border: none; padding: 14px; font-family: 'Fira Code', monospace; font-size: 12px;
+      line-height: 1.5; resize: none; outline: none; tab-size: 2;
     }
 
-    iframe#preview-frame {
-      flex: 1; width: 100%; height: 100%; background: #ffffff; border: none;
-    }
+    iframe#preview-frame { flex: 1; width: 100%; height: 100%; background: #ffffff; border: none; }
 
-    /* Modal Overlay Pause / Istirahat */
     #pause-overlay {
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px);
@@ -163,34 +150,44 @@
 
     .pause-card {
       background: var(--card-bg); border: 1px solid var(--card-border);
-      border-radius: 24px; padding: 40px; max-width: 450px; width: 100%;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      border-radius: 20px; padding: 28px; max-width: 400px; width: 100%;
     }
 
     .hidden { display: none !important; }
 
-    /* Result Circle */
     .score-circle {
-      width: 140px; height: 140px; border-radius: 50%; background: rgba(15, 23, 42, 0.8);
+      width: 120px; height: 120px; border-radius: 50%; background: rgba(15, 23, 42, 0.8);
       border: 4px solid var(--primary); display: flex; flex-direction: column;
-      align-items: center; justify-content: center; margin: 20px auto;
+      align-items: center; justify-content: center; margin: 16px auto;
+    }
+
+    @media (min-width: 768px) {
+      .container { padding: 20px; }
+      .card-box { padding: 40px; margin: 40px auto; }
+      .soal-grid { grid-template-columns: repeat(2, 1fr); gap: 8px 20px; }
+      .editor-container { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .pane { height: 500px; }
+    }
+
+    @media (max-width: 480px) {
+      .soal-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
-<body>
+<body oncontextmenu="return false;"> <!-- Mencegah Klik Kanan -->
 
 <div id="pelanggaran-bar">
-  <i class="fa-solid fa-triangle-exclamation"></i> PERINGATAN! Keluar dari Layar Ujian. Pelanggaran: <span class="badge-v" id="violation-count">0</span>x
+  <i class="fa-solid fa-triangle-exclamation"></i> DILARANG BERPINDAH APLIKASI! Pelanggaran: <span class="badge-v" id="violation-count">0</span>x
 </div>
 
-<!-- Overlay Istirahat / Pause -->
+<!-- Modal Pause -->
 <div id="pause-overlay" class="hidden">
   <div class="pause-card">
-    <div style="font-size: 50px; color: var(--warning); margin-bottom: 16px;">
+    <div style="font-size: 40px; color: var(--warning); margin-bottom: 12px;">
       <i class="fa-solid fa-mug-hot"></i>
     </div>
-    <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">Ujian Sedang Dipause</h2>
-    <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px;">Waktu dipause untuk istirahat. Klik tombol di bawah jika sudah siap melanjutkan ngoding.</p>
+    <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">Ujian Dipause</h2>
+    <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">Waktu dipause. Klik tombol di bawah untuk melanjutkan.</p>
     <button class="btn" style="background: linear-gradient(135deg, var(--success) 0%, #059669 100%);" onclick="resumeUjian()">
       <i class="fa-solid fa-play"></i>
       <span>Lanjutkan Ngoding</span>
@@ -199,7 +196,7 @@
 </div>
 
 <div class="container">
-  <!-- Halaman Login -->
+  <!-- Login -->
   <div id="page-login" class="card-box">
     <div class="header-title">
       <h1>Ujian Praktek Ngoding HTML</h1>
@@ -222,17 +219,17 @@
     </button>
   </div>
 
-  <!-- Halaman Ujian Coding -->
+  <!-- Ujian -->
   <div id="page-ujian" class="hidden">
     <div class="exam-topbar">
       <div>
-        <strong id="display-nama" style="font-size: 16px;">Nama Siswa</strong>
+        <strong id="display-nama" style="font-size: 15px;">Nama Siswa</strong>
         <div id="display-kelas" style="font-size: 12px; color: var(--text-muted);">Kelas</div>
       </div>
 
       <div class="right-controls">
         <button class="btn-pause" onclick="pauseUjian()">
-          <i class="fa-solid fa-pause"></i> Istirahat / Pause
+          <i class="fa-solid fa-pause"></i> Pause
         </button>
         <div class="timer-badge">
           <i class="fa-solid fa-clock"></i>
@@ -241,7 +238,6 @@
       </div>
     </div>
 
-    <!-- Instruksi Soal 15 Poin -->
     <div class="soal-instruction">
       <strong><i class="fa-solid fa-list-check"></i> Lengkapi 15 Fitur Kode HTML & CSS Berikut:</strong>
       <div class="soal-grid">
@@ -250,58 +246,58 @@
         <div>2. Paragraf (<code>&lt;p&gt;</code>)</div>
         <div>10. Tabel (<code>&lt;table&gt;</code>)</div>
         <div>3. Teks Tebal (<code>&lt;b&gt;</code>/<code>&lt;strong&gt;</code>)</div>
-        <div>11. Baris & Sel Tabel (<code>&lt;tr&gt;</code> & <code>&lt;td&gt;</code>)</div>
+        <div>11. Baris & Sel (<code>&lt;tr&gt;</code> & <code>&lt;td&gt;</code>)</div>
         <div>4. Teks Miring (<code>&lt;i&gt;</code>/<code>&lt;em&gt;</code>)</div>
-        <div>12. Pembatas / Spasi (<code>&lt;hr&gt;</code> / <code>&lt;br&gt;</code>)</div>
-        <div>5. Teks Garis Bawah (<code>&lt;u&gt;</code>/<code>&lt;ins&gt;</code>)</div>
+        <div>12. Spasi (<code>&lt;hr&gt;</code> / <code>&lt;br&gt;</code>)</div>
+        <div>5. Teks Garis Bawah (<code>&lt;u&gt;</code>)</div>
         <div>13. Style Warna (<code>style="color:..."</code>)</div>
-        <div>6. Gambar (<code>&lt;img src="..." alt="..."&gt;</code>)</div>
-        <div>14. Input Teks (<code>&lt;input type="..."&gt;</code>)</div>
-        <div>7. Tautan / Link (<code>&lt;a href="..."&gt;</code>)</div>
+        <div>6. Gambar (<code>&lt;img src="..."&gt;</code>)</div>
+        <div>14. Input (<code>&lt;input type="..."&gt;</code>)</div>
+        <div>7. Link (<code>&lt;a href="..."&gt;</code>)</div>
         <div>15. Tombol (<code>&lt;button&gt;</code>)</div>
         <div>8. List (<code>&lt;ol&gt;</code> / <code>&lt;ul&gt;</code>)</div>
       </div>
     </div>
 
-    <!-- Editor & Preview -->
     <div class="editor-container">
       <div class="pane">
         <div class="pane-header">
           <span><i class="fa-solid fa-code"></i> HTML EDITOR</span>
-          <span style="font-size: 11px; opacity: 0.7;">Ketik kode HTML di sini</span>
+          <span style="font-size: 10px; opacity: 0.7;">Ketik manual (Copas Dibatasi)</span>
         </div>
-        <textarea id="code-input" placeholder="Tuliskan seluruh kode HTML & CSS Anda..." oninput="updatePreview()"></textarea>
+        <!-- Anti-Paste diterapkan pada textarea -->
+        <textarea id="code-input" placeholder="Tuliskan seluruh kode HTML Anda di sini..." oninput="updatePreview()" onpaste="blokirPaste(event)"></textarea>
       </div>
 
       <div class="pane">
         <div class="pane-header">
           <span><i class="fa-solid fa-eye"></i> LIVE PREVIEW</span>
-          <span style="font-size: 11px; opacity: 0.7;">Hasil Tampilan Real-time</span>
+          <span style="font-size: 10px; opacity: 0.7;">Tampilan Real-time</span>
         </div>
         <iframe id="preview-frame"></iframe>
       </div>
     </div>
 
-    <button class="btn" id="btn-submit" onclick="konfirmasiSelesai()" style="margin-top: 20px;">
+    <button class="btn" id="btn-submit" onclick="konfirmasiSelesai()" style="margin-top: 16px;">
       <i class="fa-solid fa-paper-plane"></i>
       <span>Selesai & Kirim Kode Ujian</span>
     </button>
   </div>
 
-  <!-- Halaman Hasil -->
+  <!-- Hasil -->
   <div id="page-hasil" class="hidden card-box" style="text-align: center;">
     <h2>Laporan Hasil Ujian Praktek</h2>
-    <p style="color: var(--text-muted); font-size: 14px; margin-top: 4px;">Sistem Evaluasi Auto-Grading (15 Kriteria)</p>
+    <p style="color: var(--text-muted); font-size: 13px; margin-top: 4px;">Evaluasi Otomatis</p>
 
     <div class="score-circle">
-      <span id="display-skor" style="font-size: 44px; font-weight: 800; color: #fff;">0</span>
-      <span style="font-size: 11px; text-transform: uppercase; color: var(--text-muted);">Skor Akhir</span>
+      <span id="display-skor" style="font-size: 38px; font-weight: 800; color: #fff;">0</span>
+      <span style="font-size: 10px; text-transform: uppercase; color: var(--text-muted);">Skor Akhir</span>
     </div>
 
     <div id="status-box"></div>
-    <p id="pesan-detail" style="margin-top: 16px; color: var(--text-muted); font-size: 14px; line-height: 1.6;"></p>
+    <p id="pesan-detail" style="margin-top: 14px; color: var(--text-muted); font-size: 13px; line-height: 1.5;"></p>
 
-    <div id="action-remedial" class="hidden" style="margin-top: 25px;">
+    <div id="action-remedial" class="hidden" style="margin-top: 20px;">
       <button class="btn" style="background: linear-gradient(135deg, var(--warning), #d97706);" onclick="ulangUjian()">
         <i class="fa-solid fa-rotate-right"></i>
         <span>Mengulang Ujian Kembali</span>
@@ -311,7 +307,6 @@
 </div>
 
 <script>
-  // PASTE URL GOOGLE APPS SCRIPT ANDA DI SINI
   const GAS_WEB_APP_URL = "GANTI_DENGAN_URL_GOOGLE_APPS_SCRIPT_ANDA";
 
   let dataPeserta = { nama: "", kelas: "" };
@@ -319,7 +314,7 @@
   let isUjianAktif = false;
   let isPaused = false;
   let timerInterval = null;
-  let totalDetik = 3600; // 60 Menit = 3600 Detik
+  let totalDetik = 3600;
 
   const defaultCode = `<!DOCTYPE html>
 <html>
@@ -338,7 +333,7 @@
     const kelas = document.getElementById('kelas').value.trim();
 
     if (!nama || !kelas) {
-      alert("Harap lengkapi Nama dan Kelas terlebih dahulu!");
+      alert("Harap lengkapi Nama dan Kelas!");
       return;
     }
 
@@ -355,6 +350,7 @@
     updatePreview();
 
     isUjianAktif = true;
+    aktifkanPengawas();
     startTimer();
   }
 
@@ -373,11 +369,41 @@
 
         if (totalDetik <= 0) {
           clearInterval(timerInterval);
-          alert("Waktu 60 menit telah habis! Kode Anda akan otomatis dikirim.");
+          alert("Waktu habis! Kode Anda dikirim otomatis.");
           hitungHasil();
         }
       }
     }, 1000);
+  }
+
+  /* BLOKIR COPY PASTE */
+  function blokirPaste(e) {
+    e.preventDefault();
+    catatPelanggaran("Dilarang melakukan Paste kode (Ketik manual)!");
+  }
+
+  /* SISTEM PENGAWAS ANTI CHECK GOOGLE/AI */
+  function aktifkanPengawas() {
+    document.getElementById('pelanggaran-bar').style.display = 'block';
+
+    // Mendeteksi ketika siswa meminimalkan browser atau berpindah tab/aplikasi
+    document.addEventListener("visibilitychange", function() {
+      if (document.hidden && isUjianAktif && !isPaused) {
+        catatPelanggaran("Membuka aplikasi lain / Meninggalkan halaman ujian");
+      }
+    });
+
+    window.addEventListener("blur", function() {
+      if (isUjianAktif && !isPaused) {
+        catatPelanggaran("Berpindah layar / Mengakses AI/Google");
+      }
+    });
+  }
+
+  function catatPelanggaran(alasan) {
+    jumlahPelanggaran++;
+    document.getElementById('violation-count').innerText = jumlahPelanggaran;
+    alert(`PERINGATAN PELANGGARAN (${jumlahPelanggaran}x)!\nAlasan: ${alasan}.\nUjian tercatat melanggar!`);
   }
 
   function pauseUjian() {
@@ -389,6 +415,7 @@
   function resumeUjian() {
     isPaused = false;
     document.getElementById('pause-overlay').classList.add('hidden');
+    if (isUjianAktif) document.getElementById('pelanggaran-bar').style.display = 'block';
   }
 
   function updatePreview() {
@@ -415,7 +442,6 @@
     const userCode = document.getElementById('code-input').value.toLowerCase();
     let skorTotal = 0;
 
-    // EVALUASI AUTO-GRADING 15 KRITERIA
     if (/<h[1-6][^>]*>.*?<\/h[1-6]>/.test(userCode)) skorTotal += 7;
     if (/<p[^>]*>.*?<\/p>/.test(userCode)) skorTotal += 7;
     if (/<(b|strong)[^>]*>.*?<\/(b|strong)>/.test(userCode)) skorTotal += 7;
@@ -438,7 +464,6 @@
     btnSubmit.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Mengirimkan Nilai...</span>`;
     btnSubmit.disabled = true;
 
-    // Kirim data ke Apps Script
     fetch(GAS_WEB_APP_URL, {
       method: 'POST',
       mode: 'no-cors',
@@ -450,13 +475,8 @@
         pelanggaran: jumlahPelanggaran
       })
     })
-    .then(() => {
-      tampilkanHalamanHasil(skorTotal);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      tampilkanHalamanHasil(skorTotal);
-    });
+    .then(() => { tampilkanHalamanHasil(skorTotal); })
+    .catch((error) => { tampilkanHalamanHasil(skorTotal); });
   }
 
   function tampilkanHalamanHasil(skor) {
@@ -472,11 +492,11 @@
 
     if (skor >= 80) {
       statusBox.innerHTML = `<h3 style="color: var(--success);"><i class="fa-solid fa-circle-check"></i> PRAKTEK TUNTAS (LULUS)</h3>`;
-      pesanDetail.innerText = "Luar biasa! Kodingan Anda berhasil memenuhi kriteria utama HTML & CSS dengan nilai di atas KKM (>= 80).";
+      pesanDetail.innerText = "Kodingan Anda berhasil memenuhi kriteria utama HTML & CSS.";
       actionRemedial.classList.add('hidden');
     } else {
       statusBox.innerHTML = `<h3 style="color: var(--danger);"><i class="fa-solid fa-circle-xmark"></i> BELUM TUNTAS (REMEDIAL)</h3>`;
-      pesanDetail.innerText = "Nilai Anda di bawah 80. Pastikan Anda telah melengkapi seluruh 15 elemen wajib (seperti Heading, Paragraf, Gambar, Tabel, Form, Button, dll) lalu silakan coba lagi.";
+      pesanDetail.innerText = "Nilai Anda di bawah 80. Silakan coba lagi.";
       actionRemedial.classList.remove('hidden');
     }
   }
