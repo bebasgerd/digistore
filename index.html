@@ -30,7 +30,7 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      user-select: none; /* Mencegah seleksi teks/copas soal */
+      user-select: none;
       -webkit-user-select: none;
     }
 
@@ -174,10 +174,10 @@
     }
   </style>
 </head>
-<body oncontextmenu="return false;"> <!-- Mencegah Klik Kanan -->
+<body oncontextmenu="return false;">
 
 <div id="pelanggaran-bar">
-  <i class="fa-solid fa-triangle-exclamation"></i> DILARANG BERPINDAH APLIKASI! Pelanggaran: <span class="badge-v" id="violation-count">0</span>x
+  <i class="fa-solid fa-triangle-exclamation"></i> DILARANG KELUAR / PINDAH APLIKASI! Pelanggaran: <span class="badge-v" id="violation-count">0</span>x
 </div>
 
 <!-- Modal Pause -->
@@ -187,10 +187,10 @@
       <i class="fa-solid fa-mug-hot"></i>
     </div>
     <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">Ujian Dipause</h2>
-    <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">Waktu dipause. Klik tombol di bawah untuk melanjutkan.</p>
+    <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;">Klik tombol di bawah untuk masuk Fullscreen dan melanjutkan ujian.</p>
     <button class="btn" style="background: linear-gradient(135deg, var(--success) 0%, #059669 100%);" onclick="resumeUjian()">
       <i class="fa-solid fa-play"></i>
-      <span>Lanjutkan Ngoding</span>
+      <span>Lanjutkan & Kunci Layar</span>
     </button>
   </div>
 </div>
@@ -214,8 +214,8 @@
     </div>
 
     <button class="btn" onclick="mulaiUjian()">
-      <span>Mulai Praktek Ngoding</span>
-      <i class="fa-solid fa-code"></i>
+      <span>Mulai & Kunci Fullscreen</span>
+      <i class="fa-solid fa-expand"></i>
     </button>
   </div>
 
@@ -263,9 +263,8 @@
       <div class="pane">
         <div class="pane-header">
           <span><i class="fa-solid fa-code"></i> HTML EDITOR</span>
-          <span style="font-size: 10px; opacity: 0.7;">Ketik manual (Copas Dibatasi)</span>
+          <span style="font-size: 10px; opacity: 0.7;">Ketik manual (Anti Copas)</span>
         </div>
-        <!-- Anti-Paste diterapkan pada textarea -->
         <textarea id="code-input" placeholder="Tuliskan seluruh kode HTML Anda di sini..." oninput="updatePreview()" onpaste="blokirPaste(event)"></textarea>
       </div>
 
@@ -350,8 +349,27 @@
     updatePreview();
 
     isUjianAktif = true;
+    requestFull(); // Meminta Fullscreen saat di-klik
     aktifkanPengawas();
     startTimer();
+  }
+
+  /* KONTROL FULLSCREEN */
+  function requestFull() {
+    const docElm = document.documentElement;
+    if (docElm.requestFullscreen) {
+      docElm.requestFullscreen().catch(() => {});
+    } else if (docElm.webkitRequestFullscreen) {
+      docElm.webkitRequestFullscreen();
+    } else if (docElm.msRequestFullscreen) {
+      docElm.msRequestFullscreen();
+    }
+  }
+
+  function exitFull() {
+    if (document.exitFullscreen && document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    }
   }
 
   function startTimer() {
@@ -376,46 +394,62 @@
     }, 1000);
   }
 
-  /* BLOKIR COPY PASTE */
   function blokirPaste(e) {
     e.preventDefault();
-    catatPelanggaran("Dilarang melakukan Paste kode (Ketik manual)!");
+    catatPelanggaran("Dilarang Paste kode (Ketik manual)!");
   }
 
-  /* SISTEM PENGAWAS ANTI CHECK GOOGLE/AI */
+  /* DETEKSI KELUAR FULLSCREEN & APLIKASI LAIN */
   function aktifkanPengawas() {
     document.getElementById('pelanggaran-bar').style.display = 'block';
 
-    // Mendeteksi ketika siswa meminimalkan browser atau berpindah tab/aplikasi
+    // Deteksi Keluar dari Mode Fullscreen
+    document.addEventListener("fullscreenchange", handleFullChange);
+    document.addEventListener("webkitfullscreenchange", handleFullChange);
+
+    // Deteksi Pindah Tab / Pindah Aplikasi
     document.addEventListener("visibilitychange", function() {
       if (document.hidden && isUjianAktif && !isPaused) {
-        catatPelanggaran("Membuka aplikasi lain / Meninggalkan halaman ujian");
+        catatPelanggaran("Buka aplikasi lain / Meninggalkan ujian");
       }
     });
 
     window.addEventListener("blur", function() {
       if (isUjianAktif && !isPaused) {
-        catatPelanggaran("Berpindah layar / Mengakses AI/Google");
+        catatPelanggaran("Layar kehilangan fokus / Akses AI/Google");
       }
     });
+  }
+
+  function handleFullChange() {
+    if (isUjianAktif && !isPaused && !document.fullscreenElement && !document.webkitFullscreenElement) {
+      catatPelanggaran("Keluar dari Mode Fullscreen Ujian");
+    }
   }
 
   function catatPelanggaran(alasan) {
     jumlahPelanggaran++;
     document.getElementById('violation-count').innerText = jumlahPelanggaran;
-    alert(`PERINGATAN PELANGGARAN (${jumlahPelanggaran}x)!\nAlasan: ${alasan}.\nUjian tercatat melanggar!`);
+    alert(`PERINGATAN PELANGGARAN (${jumlahPelanggaran}x)!\nAlasan: ${alasan}.\nKembali fokus ke mode ujian!`);
+    if (isUjianAktif && !isPaused) {
+      requestFull();
+    }
   }
 
   function pauseUjian() {
     isPaused = true;
     document.getElementById('pause-overlay').classList.remove('hidden');
     document.getElementById('pelanggaran-bar').style.display = 'none';
+    exitFull();
   }
 
   function resumeUjian() {
     isPaused = false;
     document.getElementById('pause-overlay').classList.add('hidden');
-    if (isUjianAktif) document.getElementById('pelanggaran-bar').style.display = 'block';
+    if (isUjianAktif) {
+      document.getElementById('pelanggaran-bar').style.display = 'block';
+      requestFull();
+    }
   }
 
   function updatePreview() {
@@ -480,6 +514,7 @@
   }
 
   function tampilkanHalamanHasil(skor) {
+    exitFull();
     document.getElementById('page-ujian').classList.add('hidden');
     document.getElementById('page-hasil').classList.remove('hidden');
     document.getElementById('pelanggaran-bar').style.display = 'none';
@@ -517,6 +552,7 @@
     btnSubmit.disabled = false;
 
     isUjianAktif = true;
+    requestFull();
     startTimer();
   }
 </script>
